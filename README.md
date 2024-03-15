@@ -15,3 +15,9 @@
 - [ ] Görüntüye Gürültü Ekleme (Salt&Pepper) ve filtrelerin kullanımı (mean, median) ile gürültü temizleme
 - [ ] Görüntüye Filtre Uygulanması (Motion)
 - [ ] Morfolojik İşlemler (Genişleme, Aşınma, Açma, Kapama)
+
+# Arayüz
+Geçici olarak tasarladığımız arayüz şu şekilde olacaktır.
+![Form Demo](./src/ui.png)
+Gereksinimler için kontroller sağlanmış olup, operasyon öncesi ve sonrası değişiklikler histogram vasıtasıyla görülebilecektir.
+İleri bir tarihte fonksiyonların gereklilikleri için kontroller genişletilecektir.
