@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace IPForm
 {
@@ -15,6 +7,16 @@ namespace IPForm
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void label17_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+
         }
     }
 }
