@@ -139,9 +139,39 @@ namespace IPLibrary
             }
         }
 
-        private static double[] CramerMethod(int[,] A, int[] B)
+        public static double[] CramerMethod(int[,] A, int[] B)
         {
-            throw new NotImplementedException();
+            
+            if (A.GetLength(0) != A.GetLength(1))
+                throw new ArgumentException("ancak kare matrise cramer metodu uygulanabilir");
+            if (A.GetLength(0) != B.Length)
+                throw new ArgumentException("A matrisindeki satir sayisi B matrisindeki satir sayisina esit degil");
+
+            double determinantA = Determinant(A);
+
+            if (determinantA == 0)
+                throw new ArgumentException("A matrisinin tek cozumu yok");
+
+            double[] X = new double[A.GetLength(0)];
+            int[,] D = new int[A.GetLength(0), A.GetLength(1)];
+
+            for(int i =0; i<X.Length;i++) // her X[i] degiskeni icin hesap yap
+            {
+                for(int j=0;j<D.GetLength(0); j++) //D_i matrisini o anki X[i] icin doldur
+                {
+                    for(int k=0;k<D.GetLength(1);k++)
+                    {
+                        if (i == k)
+                            D[j, k] = B[j];
+                        else
+                            D[j, k] = A[j, k];
+                    }
+                }
+
+                X[i] = Determinant(D) / determinantA;
+            }
+
+            return X;
         }
     }
 }
