@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -80,10 +81,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IPLibrary\IPLibrary.csproj">
-      <Project>{2cbfe2d7-8022-4c19-b98e-dac15bd796c4}</Project>
-      <Name>IPLibrary</Name>
-    </ProjectReference>
+    <None Include="Resources\cameraman.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\histogram.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
