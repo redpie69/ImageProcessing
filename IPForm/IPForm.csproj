@@ -86,5 +86,11 @@
   <ItemGroup>
     <None Include="Resources\histogram.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IPLibrary\IPLibrary.csproj">
+      <Project>{2cbfe2d7-8022-4c19-b98e-dac15bd796c4}</Project>
+      <Name>IPLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
