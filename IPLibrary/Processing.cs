@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace IPLibrary
 {
@@ -60,18 +61,6 @@ namespace IPLibrary
         public static void Brightness(Bitmap image, int a)
         {
             Size size = image.Size;
-
-            Color maxColor = MaxColor(image);
-            Color minColor = MinColor(image);
-
-            double maxRed = maxColor.R + a;
-            double maxGreen = maxColor.G + a;
-            double maxBlue = maxColor.B + a;
-
-            double minRed = minColor.R + a;
-            double minGreen = minColor.G + a;
-            double minBlue = minColor.B + a;
-
 
             for (int x = 0; x < size.Width; x++)
             {
