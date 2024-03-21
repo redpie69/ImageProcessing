@@ -421,31 +421,54 @@ namespace IPLibrary
             return ScalarMultiplication(AdjointMatrix(A), 1 / Determinant(A));
         }
 
-        private static double[,] AdjointMatrix(double[,] A)
-        {
-            double[,] result = new double[A.GetLength(0), A.GetLength(1)];
-            double factor = 1;
+        
 
-            for(int i=0; i<A.GetLength(0);i++)
+        private static T[,] Transpoze<T>(T[,] A)
+        {
+            T[,] result = new T[A.GetLength(1), A.GetLength(0)];
+            
+            for(int i=0;i<A.GetLength(0);i++)
             {
                 for(int j=0;j<A.GetLength(1);j++)
                 {
-                    factor = (i + j) % 2 == 0 ? 1 : -1;
-                    result[i, j] = factor * MinorOf(A, i, j);
+                    result[j,i] = A[i,j];
                 }
             }
-
             return result;
         }
-
         private static double MinorOf(double[,] A,int i,int j)
         {
-            throw new NotImplementedException();
+            return Determinant(IJOut<double>(A, i, j));
         }
 
         private static double MinorOf(int[,] A,int i,int j)
         {
-            throw new NotImplementedException();
+            return Determinant(IJOut<int>(A, i, j));
+        }
+
+        private static T[,] IJOut<T>(T[,] A,int i,int j)
+        {
+            T[,] result = new T[A.GetLength(0) - 1, A.GetLength(1) - 1];
+
+            int ri = 0;
+            int rj = 0;
+
+            for(int li=0;li<A.GetLength(0);li++)
+            {
+                if (li == i)
+                    continue;
+                for (int lj = 0; lj < A.GetLength(1); lj++)
+                {
+                    if (lj == j)
+                        continue;
+                    result[ri,rj] = A[li, lj];
+                    rj++;
+                }
+                ri++;
+                rj = 0;
+            }
+
+            return result;
         }
 
         private static double[,] AdjointMatrix(int[,] A)
@@ -462,8 +485,24 @@ namespace IPLibrary
                 }
             }
 
-            return result;
+            return Transpoze<double>(result);
         }
 
+        private static double[,] AdjointMatrix(double[,] A)
+        {
+            double[,] result = new double[A.GetLength(0), A.GetLength(1)];
+            double factor = 1;
+
+            for (int i = 0; i < A.GetLength(0); i++)
+            {
+                for (int j = 0; j < A.GetLength(1); j++)
+                {
+                    factor = (i + j) % 2 == 0 ? 1 : -1;
+                    result[i, j] = factor * MinorOf(A, i, j);
+                }
+            }
+
+            return Transpoze<double>(result);
+        }
     }
 }
