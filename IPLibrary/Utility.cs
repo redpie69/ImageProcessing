@@ -8,9 +8,71 @@ using System.Threading.Tasks;
 
 namespace IPLibrary
 {
+    public enum Transforms
+    {
+        rotate,
+        translation,
+        scaling,
+        shearVertical,
+        shearHorizantal,
+    }
+    
     public static partial class IP
     {
-        private static double Interpolation(double[,] points,int destX,int destY,InterpolationMode interpolationMode)
+        private static int[,] NeighbourhoodCreator(double[,] F,int size)
+        {
+            double sizesqr = Math.Sqrt(size);
+            if (sizesqr % 1 != 0)
+                throw new ArgumentException("gecersiz buyukluk");
+            if (F.GetLength(0) != 3 || F.GetLength(1) != 1)
+                throw new ArgumentException("gecersiz orjinal nokta");
+            double xCentre = Math.Round(F[0, 0] - 0.5) +0.5 ;
+            double yCentre = Math.Round(F[1, 0] - 0.5) + 0.5;
+
+            int uLCornerX = (int)(xCentre - (sizesqr / 2 - 0.5));
+            int uLCornerY = (int)(yCentre - (sizesqr / 2 - 0.5));
+
+            int[,] points = new int[size,3];
+
+            for(int i =0;i<sizesqr;i++)
+            {
+                for(int j=0;j<sizesqr;j++)
+                {
+                    points[i * (int)sizesqr + j, 0] = uLCornerX+j;
+                    points[i * (int)sizesqr + j, 1] = uLCornerY+i;
+                }
+                
+            }
+
+            return points;
+        }
+        private static double[,] TransformMatrisCreator(Transforms type, params double[] parameters)
+        {
+            double[,] transformMatrix;
+            switch (type)
+            {
+                case Transforms.rotate:
+                    transformMatrix = new double[3, 3] { { Math.Cos(parameters[0]), -Math.Sin(parameters[0]), 0 }, { Math.Sin(parameters[0]), Math.Cos(parameters[0]), 0 }, { 0, 0, 1 } };
+                    break;
+                case Transforms.translation:
+                    transformMatrix = new double[3, 3] { { 1, 0, parameters[0] }, { 0, 1, parameters[1] }, { 0, 0, 1 } };
+                    break;
+                case Transforms.scaling:
+                    transformMatrix = new double[3, 3] { { parameters[0], 0, 0 }, { 0, parameters[1], 0 }, { 0, 0, 1 } };
+                    break;
+                case Transforms.shearVertical:
+                    transformMatrix = new double[3, 3] { { 1, parameters[0], 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+                    break;
+                case Transforms.shearHorizantal:
+                    transformMatrix = new double[3, 3] { { 1, 0, 0 }, { parameters[0], 1, 0 }, { 0, 0, 1 } };
+                    break;
+                default:
+                    throw new ArgumentException("gecersiz arguman");
+            }
+
+            return transformMatrix;
+        }
+        private static double Interpolation(int[,] points,double destX,double destY,InterpolationMode interpolationMode)
         {
             //Points[,3] {x,y,f(x,y)}
             
@@ -42,16 +104,13 @@ namespace IPLibrary
             for(int b=0;b < loopCount;b++)
             {
                 B[b]= points[b, 2];
-
+                double x = points[b, 0];
+                double y = points[b, 1];
                 for (int i=0;i<Math.Sqrt(loopCount);i++)
                 {
                     for(int j=0;j<Math.Sqrt(loopCount);j++)
                     {
-                        double x = points[i, 0];
-                        double y = points[i, 1];
-
-
-                        A[b, i*j+j] = Math.Pow(x, i) * Math.Pow(y, j);
+                        A[b, (int)(i * Math.Sqrt(loopCount) + j)] = Math.Pow(x, i) * Math.Pow(y, j);
                     }
                 }
             }
@@ -63,10 +122,11 @@ namespace IPLibrary
             {
                 for(int j=0;j<Math.Sqrt(loopCount);j++)
                 {
-                    result += Math.Pow(destX, i) * Math.Pow(destY, j)*X[i * j + j];
+                    result += Math.Pow(destX, i) * Math.Pow(destY, j)*X[(int)(i * Math.Sqrt(loopCount) + j)];
                 }
             }
-            return result;
+          
+                return result;
         }
         
     }
