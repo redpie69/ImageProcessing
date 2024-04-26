@@ -7,7 +7,7 @@
 - [x] Görüntü Yaklaştırma/Uzaklaştırma
 - [ ] Renk Uzayı Dönüşümleri
 - [ ] Giriş görüntüsüne ait histogram ve orjinal görüntü histogramını germe/genişletme
-- [ ] İki resim arasında aritmetik işlemler (çıkarma, çarpma)
+- [x] İki resim arasında aritmetik işlemler (çıkarma, çarpma)
 - [ ] Kontrast azaltma
 - [ ] Konvolüsyon İşlemi (median)
 - [ ] Eşikleme işlemleri (Çift Eşikleme)
