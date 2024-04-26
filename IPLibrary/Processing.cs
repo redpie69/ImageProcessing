@@ -356,6 +356,9 @@ namespace IPLibrary
             {
                 for(int x=0;x<newImage.Width;x++)
                 {
+                    returnMatrix[x, y] = returnMatrix[x, y] < 256 ? returnMatrix[x, y] : 255;
+                    returnMatrix[x, y] = returnMatrix[x, y] >= 0 ? returnMatrix[x, y] : 0;
+
                     newColor = Color.FromArgb(returnMatrix[x, y], returnMatrix[x, y], returnMatrix[x,y]);
                     newImage.SetPixel(x, y, newColor);
                 }
