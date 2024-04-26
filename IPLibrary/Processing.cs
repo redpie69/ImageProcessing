@@ -248,7 +248,68 @@ namespace IPLibrary
 
         }
 
+        public static void Crop(Bitmap image, Point topLeft, Point bottomRight)
+        {
+            int height = topLeft.Y - bottomRight.Y;
+            int width = topLeft.X - bottomRight.X;
+            int mappedX;
+            int mappedY;
 
+            Bitmap croppedImage = new Bitmap(width, height);
+
+            for(int y = 0; y < height; y++)
+            {
+                for(int x=0; x < width; x++)
+                {
+                    mappedX = topLeft.X + x;
+                    mappedY = topLeft.Y + y;
+                    croppedImage.SetPixel(x, y, image.GetPixel(mappedX, mappedY));
+                }
+            }
+
+            image = croppedImage;
+        }
+
+        public static void RGB2GrayScale(Bitmap image)
+        {
+            Bitmap grayImage = new Bitmap(image.Width, image.Height);
+            Color newColor;
+            Color oldColor;
+            int grayValue;
+            for(int y=0;y<image.Height; y++)
+            {
+                for(int x=0;x<image.Width; x++)
+                {
+                    oldColor = image.GetPixel(x, y);
+                    grayValue = (int)(oldColor.R * 0.2989 + oldColor.G * 0.5870 + oldColor.B * 0.1140);
+                    newColor = Color.FromArgb(grayValue,grayValue,grayValue);
+
+                    grayImage.SetPixel(x, y, newColor);
+                }
+            }
+
+            image = grayImage;
+        }
+
+        public static void GrayScale2Binary(Bitmap image)
+        {
+            RGB2GrayScale(image);
+            Color oldColor;
+            Color newColor;
+            for(int y=0;y<image.Height;y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    oldColor = image.GetPixel(x, y);
+                    if (oldColor.R >= 128)
+                        newColor = Color.White;
+                    else
+                        newColor = Color.Black;
+
+                    image.SetPixel(x,y, newColor);
+                }
+            }
+        }
 
     }
 }
