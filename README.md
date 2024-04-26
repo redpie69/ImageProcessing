@@ -1,10 +1,10 @@
 # ImageProcessing
 # Gereksinimler
 - [x] Gri Dönüşüm
-- [ ] Binary Dönüşüm
-- [ ] Görüntü Döndürme
-- [ ] Görüntü Kırpma
-- [ ] Görüntü Yaklaştırma/Uzaklaştırma
+- [x] Binary Dönüşüm
+- [x] Görüntü Döndürme
+- [x] Görüntü Kırpma
+- [x] Görüntü Yaklaştırma/Uzaklaştırma
 - [ ] Renk Uzayı Dönüşümleri
 - [ ] Giriş görüntüsüne ait histogram ve orjinal görüntü histogramını germe/genişletme
 - [ ] İki resim arasında aritmetik işlemler (çıkarma, çarpma)
