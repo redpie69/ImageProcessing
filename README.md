@@ -8,7 +8,7 @@
 - [ ] Renk Uzayı Dönüşümleri
 - [x] Giriş görüntüsüne ait histogram ve orjinal görüntü histogramını germe/genişletme
 - [x] İki resim arasında aritmetik işlemler (çıkarma, çarpma)
-- [ ] Kontrast azaltma
+- [x] Kontrast azaltma
 - [ ] Konvolüsyon İşlemi (median)
 - [ ] Eşikleme işlemleri (Çift Eşikleme)
 - [ ] Kenar Bulma Algoritmalarının Kullanımı (canny)
