@@ -463,5 +463,40 @@ namespace IPLibrary
                 }
             }
         }
+
+        public static void KontrastAyari(Bitmap image,double oran)
+        {
+            RGB2GrayScale(image);
+            double[,] imageMatrix = new double[image.Width,image.Height];
+            for(int y=0;y<image.Height; y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    imageMatrix[x, y] = image.GetPixel(x, y).R;
+                }
+            }
+
+            double[,] newMatrix = ScalarMultiplication(imageMatrix, oran);
+
+            for(int y=0; y<newMatrix.GetLength(1);y++)
+            {
+                for(int x=0;x<newMatrix.GetLength(0);x++)
+                {
+                    if (newMatrix[x,y]>255)
+                        newMatrix[x,y]= 255;
+                    if (newMatrix[x, y] < 0)
+                        newMatrix[x, y] = 0;
+                }
+            }
+
+            for(int y=0;y<image.Height;y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    Color newColor = Color.FromArgb((int)newMatrix[x, y], (int)newMatrix[x, y], (int)newMatrix[x, y]);
+                    image.SetPixel(x,y, newColor);
+                }
+            }
+        }
     }
 }
