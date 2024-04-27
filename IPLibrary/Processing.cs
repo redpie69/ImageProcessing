@@ -311,7 +311,7 @@ namespace IPLibrary
             }
         }
 
-        public static Bitmap ArithmeticOperations(Bitmap image1,Bitmap image2,ArithmeticOperations operation) 
+        public static Bitmap ArithmeticOperation(Bitmap image1,Bitmap image2,ArithmeticOperations operation) 
         {
             int width = image1.Width>= image2.Width? image1.Width:image2.Width;
             int height = image1.Height >= image2.Height? image1.Height:image2.Height;
@@ -365,6 +365,43 @@ namespace IPLibrary
             }
 
             return newImage;
+        }
+
+        public static int[] HistogramCreator(Bitmap image)
+        {
+            RGB2GrayScale(image);
+
+            int[] histogram = new int[256];
+
+            for(int i=0;i<histogram.Length;i++)
+            {
+                histogram[i] = 0;
+            }
+
+            for(int y=0;y<image.Height;y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    int gray = image.GetPixel(x, y).R;
+                    histogram[gray]++;
+                }
+            }
+            
+            return histogram;
+        }
+
+        public static int[] CDFunctionCreator(Bitmap image)
+        {
+            int[] histogram = HistogramCreator(image);
+            int[] cDF = new int[256];
+            cDF[0] = histogram[0];
+            for(int i=1;i<histogram.Length;i++)
+            {
+                cDF[i] = cDF[i-1]+histogram[i];
+            }
+
+            return cDF;
+            
         }
 
     }
