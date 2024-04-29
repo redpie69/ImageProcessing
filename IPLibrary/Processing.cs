@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
 namespace IPLibrary
@@ -61,7 +56,7 @@ namespace IPLibrary
         public static void Translate(Bitmap image, double x, double y)
         {
             Bitmap oldImage = (Bitmap)image.Clone();
-            double[,] TransformMatrix = TransformMatrisCreator(Transforms.translation, x, y);
+            double[,] TransformMatrix = TransformMatrisCreator(Transforms.Translation, x, y);
             double[,] reversed = MatrixInverse(TransformMatrix);
             double[,] V = new double[3, 1];
             V[2, 0] = 1;
@@ -93,9 +88,9 @@ namespace IPLibrary
             int centreX = image.Width / 2;
             int centreY = image.Height / 2;
 
-            double[,] translateToOrigin = TransformMatrisCreator(Transforms.translation, -centreX, -centreY);
-            double[,] rotate = TransformMatrisCreator(Transforms.rotate, angle);
-            double[,] translateBack = TransformMatrisCreator(Transforms.translation, centreX, centreY);
+            double[,] translateToOrigin = TransformMatrisCreator(Transforms.Translation, -centreX, -centreY);
+            double[,] rotate = TransformMatrisCreator(Transforms.Rotate, angle);
+            double[,] translateBack = TransformMatrisCreator(Transforms.Translation, centreX, centreY);
             double[,] intermediate = MatrixMultiplication(translateBack, rotate);
             double[,] transformMatrix = MatrixMultiplication(intermediate, translateToOrigin);
             double[,] reversed = MatrixInverse(transformMatrix);
@@ -257,9 +252,9 @@ namespace IPLibrary
 
             Bitmap croppedImage = new Bitmap(width, height);
 
-            for(int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
-                for(int x=0; x < width; x++)
+                for (int x = 0; x < width; x++)
                 {
                     mappedX = topLeft.X + x;
                     mappedY = topLeft.Y + y;
@@ -275,13 +270,13 @@ namespace IPLibrary
             Color newColor;
             Color oldColor;
             int grayValue;
-            for(int y=0;y<image.Height; y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width; x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     oldColor = image.GetPixel(x, y);
                     grayValue = (int)(oldColor.R * 0.2989 + oldColor.G * 0.5870 + oldColor.B * 0.1140);
-                    newColor = Color.FromArgb(grayValue,grayValue,grayValue);
+                    newColor = Color.FromArgb(grayValue, grayValue, grayValue);
 
                     image.SetPixel(x, y, newColor);
                 }
@@ -293,9 +288,9 @@ namespace IPLibrary
             RGB2GrayScale(image);
             Color oldColor;
             Color newColor;
-            for(int y=0;y<image.Height;y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     oldColor = image.GetPixel(x, y);
                     if (oldColor.R >= 128)
@@ -303,36 +298,36 @@ namespace IPLibrary
                     else
                         newColor = Color.Black;
 
-                    image.SetPixel(x,y, newColor);
+                    image.SetPixel(x, y, newColor);
                 }
             }
         }
 
-        public static Bitmap ArithmeticOperation(Bitmap image1,Bitmap image2,ArithmeticOperations operation) 
+        public static Bitmap ArithmeticOperation(Bitmap image1, Bitmap image2, ArithmeticOperations operation)
         {
-            int width = image1.Width>= image2.Width? image1.Width:image2.Width;
-            int height = image1.Height >= image2.Height? image1.Height:image2.Height;
+            int width = image1.Width >= image2.Width ? image1.Width : image2.Width;
+            int height = image1.Height >= image2.Height ? image1.Height : image2.Height;
 
             RGB2GrayScale(image1);
             RGB2GrayScale(image2);
 
-            int[,] matrix1 = new int[width,height];
+            int[,] matrix1 = new int[width, height];
             int[,] matrix2 = new int[width, height];
 
-            for(int x=0;x<width;x++)
+            for (int x = 0; x < width; x++)
             {
-                for(int y=0;y<height;y++)
+                for (int y = 0; y < height; y++)
                 {
                     matrix1[x, y] = 0;
-                    matrix2[x,y] = 0;
+                    matrix2[x, y] = 0;
                 }
             }
 
-            for(int y=0;y<image1.Height;y++)
+            for (int y = 0; y < image1.Height; y++)
             {
-                for(int x = 0; x < image1.Width; x++)
+                for (int x = 0; x < image1.Width; x++)
                 {
-                    matrix1[x,y] = image1.GetPixel(x, y).R;
+                    matrix1[x, y] = image1.GetPixel(x, y).R;
                 }
             }
 
@@ -344,19 +339,19 @@ namespace IPLibrary
                 }
             }
 
-            int[,] returnMatrix = MatrixElementwiseOperations(matrix1,matrix2,operation);
+            int[,] returnMatrix = MatrixElementwiseOperations(matrix1, matrix2, operation);
 
             Color newColor;
-            Bitmap newImage = new Bitmap(returnMatrix.GetLength(0),returnMatrix.GetLength(1));
+            Bitmap newImage = new Bitmap(returnMatrix.GetLength(0), returnMatrix.GetLength(1));
 
-            for(int y=0;y<newImage.Height;y++)
+            for (int y = 0; y < newImage.Height; y++)
             {
-                for(int x=0;x<newImage.Width;x++)
+                for (int x = 0; x < newImage.Width; x++)
                 {
                     returnMatrix[x, y] = returnMatrix[x, y] < 256 ? returnMatrix[x, y] : 255;
                     returnMatrix[x, y] = returnMatrix[x, y] >= 0 ? returnMatrix[x, y] : 0;
 
-                    newColor = Color.FromArgb(returnMatrix[x, y], returnMatrix[x, y], returnMatrix[x,y]);
+                    newColor = Color.FromArgb(returnMatrix[x, y], returnMatrix[x, y], returnMatrix[x, y]);
                     newImage.SetPixel(x, y, newColor);
                 }
             }
@@ -370,20 +365,20 @@ namespace IPLibrary
 
             int[] histogram = new int[256];
 
-            for(int i=0;i<histogram.Length;i++)
+            for (int i = 0; i < histogram.Length; i++)
             {
                 histogram[i] = 0;
             }
 
-            for(int y=0;y<image.Height;y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     int gray = image.GetPixel(x, y).R;
                     histogram[gray]++;
                 }
             }
-            
+
             return histogram;
         }
 
@@ -392,30 +387,30 @@ namespace IPLibrary
             int[] histogram = HistogramCreator(image);
             int[] cDF = new int[256];
             cDF[0] = histogram[0];
-            for(int i=1;i<histogram.Length;i++)
+            for (int i = 1; i < histogram.Length; i++)
             {
-                cDF[i] = cDF[i-1]+histogram[i];
+                cDF[i] = cDF[i - 1] + histogram[i];
             }
 
             return cDF;
-            
+
         }
 
-        public static void HistogramGerme(Bitmap image, int max,int min)
+        public static void HistogramGerme(Bitmap image, int max, int min)
         {
             RGB2GrayScale(image);
 
             int imgMin = 255;
             int imgMax = 0;
 
-            for(int y=0;y<image.Height;y++) 
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x< image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
-                    if(image.GetPixel(x, y).R < imgMin)
-                        imgMin = image.GetPixel(x,y).R;
-                    if(image.GetPixel(x,y).R > imgMax)
-                        imgMax = image.GetPixel(x,y).R;
+                    if (image.GetPixel(x, y).R < imgMin)
+                        imgMin = image.GetPixel(x, y).R;
+                    if (image.GetPixel(x, y).R > imgMax)
+                        imgMax = image.GetPixel(x, y).R;
                 }
             }
 
@@ -425,13 +420,13 @@ namespace IPLibrary
                 {
                     double oldPixel = image.GetPixel(x, y).R;
                     double newPixel = (oldPixel - imgMin) * (max - min) / (imgMax - imgMin) + min;
-                    Color newColor = Color.FromArgb((int)newPixel,(int)newPixel,(int)newPixel);
+                    Color newColor = Color.FromArgb((int)newPixel, (int)newPixel, (int)newPixel);
                     image.SetPixel(x, y, newColor);
                 }
             }
         }
 
-        
+
 
         public static void HistogramGenisletme(Bitmap image)
         {
@@ -463,13 +458,13 @@ namespace IPLibrary
             }
         }
 
-        public static void KontrastAyari(Bitmap image,double oran)
+        public static void KontrastAyari(Bitmap image, double oran)
         {
             RGB2GrayScale(image);
-            double[,] imageMatrix = new double[image.Width,image.Height];
-            for(int y=0;y<image.Height; y++)
+            double[,] imageMatrix = new double[image.Width, image.Height];
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     imageMatrix[x, y] = image.GetPixel(x, y).R;
                 }
@@ -477,34 +472,34 @@ namespace IPLibrary
 
             double[,] newMatrix = ScalarMultiplication(imageMatrix, oran);
 
-            for(int y=0; y<newMatrix.GetLength(1);y++)
+            for (int y = 0; y < newMatrix.GetLength(1); y++)
             {
-                for(int x=0;x<newMatrix.GetLength(0);x++)
+                for (int x = 0; x < newMatrix.GetLength(0); x++)
                 {
-                    if (newMatrix[x,y]>255)
-                        newMatrix[x,y]= 255;
+                    if (newMatrix[x, y] > 255)
+                        newMatrix[x, y] = 255;
                     if (newMatrix[x, y] < 0)
                         newMatrix[x, y] = 0;
                 }
             }
 
-            for(int y=0;y<image.Height;y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     Color newColor = Color.FromArgb((int)newMatrix[x, y], (int)newMatrix[x, y], (int)newMatrix[x, y]);
-                    image.SetPixel(x,y, newColor);
+                    image.SetPixel(x, y, newColor);
                 }
             }
         }
 
         public static void Konvolusyon(Bitmap image, double[,] kernel)
         {
-            if(kernel.GetLength(0)!=kernel.GetLength(1))
+            if (kernel.GetLength(0) != kernel.GetLength(1))
             {
                 throw new ArgumentException("kernel kare matris olmali");
             }
-            if(kernel.GetLength(0)%2!=1)
+            if (kernel.GetLength(0) % 2 != 1)
             {
                 throw new ArgumentException("kernelin eni ve boyu tek sayi olmali");
             }
@@ -516,17 +511,17 @@ namespace IPLibrary
             int kernelBoyutu = kernel.GetLength(0);
             int merkezdenUzaklik = kernelBoyutu / 2;
 
-            Bitmap newImage = new Bitmap(image.Width,image.Height);
+            Bitmap newImage = new Bitmap(image.Width, image.Height);
 
-            for(int y=1;y<cerceveli.Height-1;y++)
+            for (int y = 1; y < cerceveli.Height - 1; y++)
             {
-                for(int x=1;x<cerceveli.Width-1;x++)
+                for (int x = 1; x < cerceveli.Width - 1; x++)
                 {
                     double toplam = 0;
 
-                    for(int i=0;i<kernel.GetLength(0);i++)
+                    for (int i = 0; i < kernel.GetLength(0); i++)
                     {
-                        for(int j=0;j<kernel.GetLength(1);j++)
+                        for (int j = 0; j < kernel.GetLength(1); j++)
                         {
                             toplam += matrisHali[x - merkezdenUzaklik + i, y - merkezdenUzaklik + j] * dondurulmusKernel[i, j];
                         }
@@ -540,15 +535,15 @@ namespace IPLibrary
                         toplam = 0;
                     }
 
-                    newImage.SetPixel(x-1, y-1, Color.FromArgb((int)toplam,(int)toplam, (int)toplam));
+                    newImage.SetPixel(x - 1, y - 1, Color.FromArgb((int)toplam, (int)toplam, (int)toplam));
 
                 }
             }
-            for(int y=0;y<image.Height;y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
-                    image.SetPixel(x, y, newImage.GetPixel(x, y)); 
+                    image.SetPixel(x, y, newImage.GetPixel(x, y));
                 }
             }
         }

@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IPLibrary
 {
     public enum ArithmeticOperations
     {
-        add,
-        subtract,
-        multiply,
-        divide
+        Add,
+        Subtract,
+        Multiply,
+        Divide
     }
     public static partial class IP
     {
@@ -41,7 +36,7 @@ namespace IPLibrary
 
             for (int i = 0; i < kernel.GetLength(0); i++)
             {
-                for(int j=0; j < kernel.GetLength(1);j++)
+                for (int j = 0; j < kernel.GetLength(1); j++)
                 {
                     dondurulmusKernel[tersiAlinacakSayi - i, tersiAlinacakSayi - j] = kernel[i, j];
                 }
@@ -51,7 +46,7 @@ namespace IPLibrary
         private static double[,] KerneliDondur(double[,] kernel)
         {
             double[,] dondurulmusKernel = new double[kernel.GetLength(0), kernel.GetLength(1)];
-            int tersiAlinacakSayi = kernel.GetLength(0)-1;
+            int tersiAlinacakSayi = kernel.GetLength(0) - 1;
 
             for (int i = 0; i < kernel.GetLength(0); i++)
             {
@@ -62,13 +57,13 @@ namespace IPLibrary
             }
             return dondurulmusKernel;
         }
-        private static double[,] ScalarMultiplication(double[,] A,double s)
+        private static double[,] ScalarMultiplication(double[,] A, double s)
         {
-            double[,] result = new double[A.GetLength(0),A.GetLength(1)];
+            double[,] result = new double[A.GetLength(0), A.GetLength(1)];
 
-            for(int i=0;i<A.GetLength(0);i++)
+            for (int i = 0; i < A.GetLength(0); i++)
             {
-                for(int j=0;j<A.GetLength(1);j++)
+                for (int j = 0; j < A.GetLength(1); j++)
                 {
                     result[i, j] = A[i, j] * s;
                 }
@@ -297,16 +292,16 @@ namespace IPLibrary
             return X;
         }
 
-        private static int[,] MatrixElementwiseOperations(int[,] A, int[,] B,ArithmeticOperations operation)
+        private static int[,] MatrixElementwiseOperations(int[,] A, int[,] B, ArithmeticOperations operation)
         {
             if (A.GetLength(0) != B.GetLength(0) || A.GetLength(1) != B.GetLength(1))
                 throw new ArgumentException("matris boyutlari esit degil");
 
             int[,] result = new int[A.GetLength(0), A.GetLength(1)];
 
-            switch(operation)
+            switch (operation)
             {
-                case ArithmeticOperations.add:
+                case ArithmeticOperations.Add:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -315,7 +310,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.subtract:
+                case ArithmeticOperations.Subtract:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -324,7 +319,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.multiply:
+                case ArithmeticOperations.Multiply:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -333,7 +328,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.divide:
+                case ArithmeticOperations.Divide:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -358,7 +353,7 @@ namespace IPLibrary
 
             switch (operation)
             {
-                case ArithmeticOperations.add:
+                case ArithmeticOperations.Add:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -367,7 +362,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.subtract:
+                case ArithmeticOperations.Subtract:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -376,7 +371,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.multiply:
+                case ArithmeticOperations.Multiply:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -385,7 +380,7 @@ namespace IPLibrary
                         }
                     }
                     break;
-                case ArithmeticOperations.divide:
+                case ArithmeticOperations.Divide:
                     for (int i = 0; i < A.GetLength(0); i++)
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
@@ -401,14 +396,14 @@ namespace IPLibrary
             return result;
         }
 
-        private static double InnerProduct(double[] a,double[] b)
+        private static double InnerProduct(double[] a, double[] b)
         {
             if (a.Length != b.Length)
                 throw new ArgumentException("vektorler ayni boyutta degil");
 
             double result = 0;
 
-            for(int i =0; i<a.Length; i++)
+            for (int i = 0; i < a.Length; i++)
             {
                 result += a[i] * b[i];
             }
@@ -418,12 +413,12 @@ namespace IPLibrary
 
         private static double EuclidianNorm(double[] a)
         {
-            return Math.Sqrt(InnerProduct(a,a));
+            return Math.Sqrt(InnerProduct(a, a));
         }
 
         private static double EuclidianDistance(double[] a, double[] b)
         {
-            return EuclidianNorm(VectorDifference(a,b));
+            return EuclidianNorm(VectorDifference(a, b));
         }
 
         private static double[] VectorSum(double[] a, double[] b)
@@ -433,12 +428,12 @@ namespace IPLibrary
 
             double[] result = new double[a.Length];
 
-            for(int i=0;i<a.Length;i++)
+            for (int i = 0; i < a.Length; i++)
             {
                 result[i] = a[i] + b[i];
             }
 
-            return result ;
+            return result;
         }
 
         private static double[] VectorDifference(double[] a, double[] b)
@@ -466,39 +461,39 @@ namespace IPLibrary
             return ScalarMultiplication(AdjointMatrix(A), 1 / Determinant(A));
         }
 
-        
+
 
         private static T[,] Transpoze<T>(T[,] A)
         {
             T[,] result = new T[A.GetLength(1), A.GetLength(0)];
-            
-            for(int i=0;i<A.GetLength(0);i++)
+
+            for (int i = 0; i < A.GetLength(0); i++)
             {
-                for(int j=0;j<A.GetLength(1);j++)
+                for (int j = 0; j < A.GetLength(1); j++)
                 {
-                    result[j,i] = A[i,j];
+                    result[j, i] = A[i, j];
                 }
             }
             return result;
         }
-        private static double MinorOf(double[,] A,int i,int j)
+        private static double MinorOf(double[,] A, int i, int j)
         {
             return Determinant(IJOut<double>(A, i, j));
         }
 
-        private static double MinorOf(int[,] A,int i,int j)
+        private static double MinorOf(int[,] A, int i, int j)
         {
             return Determinant(IJOut<int>(A, i, j));
         }
 
-        private static T[,] IJOut<T>(T[,] A,int i,int j)
+        private static T[,] IJOut<T>(T[,] A, int i, int j)
         {
             T[,] result = new T[A.GetLength(0) - 1, A.GetLength(1) - 1];
 
             int ri = 0;
             int rj = 0;
 
-            for(int li=0;li<A.GetLength(0);li++)
+            for (int li = 0; li < A.GetLength(0); li++)
             {
                 if (li == i)
                     continue;
@@ -506,7 +501,7 @@ namespace IPLibrary
                 {
                     if (lj == j)
                         continue;
-                    result[ri,rj] = A[li, lj];
+                    result[ri, rj] = A[li, lj];
                     rj++;
                 }
                 ri++;
