@@ -19,6 +19,23 @@ namespace IPLibrary
     
     public static partial class IP
     {
+        private static Bitmap CevresiniDoldurma(Bitmap image)
+        {
+            Bitmap CerceveliBitmap = new Bitmap(image.Width+1, image.Height+1);
+
+            for(int y=0; y<CerceveliBitmap.Height; y++)
+            {
+                for(int x=0; x<CerceveliBitmap.Width; x++)
+                {
+                    if (x == 0 || y == 0 || y == CerceveliBitmap.Height - 1 || x == CerceveliBitmap.Width - 1)
+                        CerceveliBitmap.SetPixel(x, y, Color.Black);
+                    else
+                        CerceveliBitmap.SetPixel(x, y, image.GetPixel(x - 1, y - 1));
+                }
+            }
+
+            return CerceveliBitmap;
+        }
         private static int[,] NeighbourhoodCreator(double[,] F,int size)
         {
             double sizesqr = Math.Sqrt(size);

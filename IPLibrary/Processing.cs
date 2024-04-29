@@ -248,7 +248,7 @@ namespace IPLibrary
 
         }
 
-        public static void Crop(Bitmap image, Point topLeft, Point bottomRight)
+        public static Bitmap Crop(Bitmap image, Point topLeft, Point bottomRight)
         {
             int height = topLeft.Y - bottomRight.Y;
             int width = topLeft.X - bottomRight.X;
@@ -267,12 +267,11 @@ namespace IPLibrary
                 }
             }
 
-            image = croppedImage;
+            return croppedImage;
         }
 
         public static void RGB2GrayScale(Bitmap image)
         {
-            Bitmap grayImage = new Bitmap(image.Width, image.Height);
             Color newColor;
             Color oldColor;
             int grayValue;
@@ -284,11 +283,9 @@ namespace IPLibrary
                     grayValue = (int)(oldColor.R * 0.2989 + oldColor.G * 0.5870 + oldColor.B * 0.1140);
                     newColor = Color.FromArgb(grayValue,grayValue,grayValue);
 
-                    grayImage.SetPixel(x, y, newColor);
+                    image.SetPixel(x, y, newColor);
                 }
             }
-
-            image = grayImage;
         }
 
         public static void GrayScale2Binary(Bitmap image)
@@ -434,6 +431,8 @@ namespace IPLibrary
             }
         }
 
+        
+
         public static void HistogramGenisletme(Bitmap image)
         {
             RGB2GrayScale(image);
@@ -498,5 +497,62 @@ namespace IPLibrary
                 }
             }
         }
+
+        public static void Konvolusyon(Bitmap image, double[,] kernel)
+        {
+            if(kernel.GetLength(0)!=kernel.GetLength(1))
+            {
+                throw new ArgumentException("kernel kare matris olmali");
+            }
+            if(kernel.GetLength(0)%2!=1)
+            {
+                throw new ArgumentException("kernelin eni ve boyu tek sayi olmali");
+            }
+
+            Bitmap cerceveli = CevresiniDoldurma(image);
+            double[,] dondurulmusKernel = KerneliDondur(kernel);
+            int[,] matrisHali = TurnItToMatrix(cerceveli);
+
+            int kernelBoyutu = kernel.GetLength(0);
+            int merkezdenUzaklik = kernelBoyutu / 2;
+
+            Bitmap newImage = new Bitmap(image.Width,image.Height);
+
+            for(int y=1;y<cerceveli.Height-1;y++)
+            {
+                for(int x=1;x<cerceveli.Width-1;x++)
+                {
+                    double toplam = 0;
+
+                    for(int i=0;i<kernel.GetLength(0);i++)
+                    {
+                        for(int j=0;j<kernel.GetLength(1);j++)
+                        {
+                            toplam += matrisHali[x - merkezdenUzaklik + i, y - merkezdenUzaklik + j] * dondurulmusKernel[i, j];
+                        }
+                    }
+                    if (toplam > 255)
+                    {
+                        toplam = 255;
+                    }
+                    else if (toplam < 0)
+                    {
+                        toplam = 0;
+                    }
+
+                    newImage.SetPixel(x-1, y-1, Color.FromArgb((int)toplam,(int)toplam, (int)toplam));
+
+                }
+            }
+            for(int y=0;y<image.Height;y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    image.SetPixel(x, y, newImage.GetPixel(x, y)); 
+                }
+            }
+        }
+
+
     }
 }
