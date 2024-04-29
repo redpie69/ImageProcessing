@@ -324,7 +324,7 @@ namespace IPLibrary
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
                         {
-                            result[i, j] = A[i, j] - B[i, j];
+                            result[i, j] = A[i, j] * B[i, j];
                         }
                     }
                     break;
@@ -333,7 +333,7 @@ namespace IPLibrary
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
                         {
-                            result[i, j] = A[i, j] - B[i, j];
+                            result[i, j] = A[i, j] / B[i, j];
                         }
                     }
                     break;
@@ -376,7 +376,7 @@ namespace IPLibrary
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
                         {
-                            result[i, j] = A[i, j] - B[i, j];
+                            result[i, j] = A[i, j] * B[i, j];
                         }
                     }
                     break;
@@ -385,7 +385,7 @@ namespace IPLibrary
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
                         {
-                            result[i, j] = A[i, j] - B[i, j];
+                            result[i, j] = A[i, j] / B[i, j];
                         }
                     }
                     break;
