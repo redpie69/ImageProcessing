@@ -15,6 +15,11 @@ namespace IPLibrary
 
     public static partial class IP
     {
+        /// <summary>
+        /// Creates a bitmap with a border around the original image.
+        /// </summary>
+        /// <param name="image">The original image.</param>
+        /// <returns>The bitmap with a border.</returns>
         private static Bitmap CevresiniDoldurma(Bitmap image)
         {
             Bitmap CerceveliBitmap = new Bitmap(image.Width + 1, image.Height + 1);
@@ -32,13 +37,20 @@ namespace IPLibrary
 
             return CerceveliBitmap;
         }
+
+        /// <summary>
+        /// Creates a neighborhood matrix for a given point.
+        /// </summary>
+        /// <param name="F">The original point.</param>
+        /// <param name="size">The size of the neighborhood matrix.</param>
+        /// <returns>The neighborhood matrix.</returns>
         private static int[,] NeighbourhoodCreator(double[,] F, int size)
         {
             double sizesqr = Math.Sqrt(size);
             if (sizesqr % 1 != 0)
-                throw new ArgumentException("gecersiz buyukluk");
+                throw new ArgumentException("Invalid size");
             if (F.GetLength(0) != 3 || F.GetLength(1) != 1)
-                throw new ArgumentException("gecersiz orjinal nokta");
+                throw new ArgumentException("Invalid original point");
             double xCentre = Math.Round(F[0, 0] - 0.5) + 0.5;
             double yCentre = Math.Round(F[1, 0] - 0.5) + 0.5;
 
@@ -59,6 +71,13 @@ namespace IPLibrary
 
             return points;
         }
+
+        /// <summary>
+        /// Creates a transformation matrix for a given transformation type and parameters.
+        /// </summary>
+        /// <param name="type">The transformation type.</param>
+        /// <param name="parameters">The transformation parameters.</param>
+        /// <returns>The transformation matrix.</returns>
         private static double[,] TransformMatrisCreator(Transforms type, params double[] parameters)
         {
             double[,] transformMatrix;
@@ -80,17 +99,26 @@ namespace IPLibrary
                     transformMatrix = new double[3, 3] { { 1, 0, 0 }, { parameters[0], 1, 0 }, { 0, 0, 1 } };
                     break;
                 default:
-                    throw new ArgumentException("gecersiz arguman");
+                    throw new ArgumentException("Invalid argument");
             }
 
             return transformMatrix;
         }
+
+        /// <summary>
+        /// Performs interpolation on a set of points to determine the value at a given destination point.
+        /// </summary>
+        /// <param name="points">The set of points.</param>
+        /// <param name="destX">The x-coordinate of the destination point.</param>
+        /// <param name="destY">The y-coordinate of the destination point.</param>
+        /// <param name="interpolationMode">The interpolation mode.</param>
+        /// <returns>The interpolated value.</returns>
         private static double Interpolation(int[,] points, double destX, double destY, InterpolationMode interpolationMode)
         {
             //Points[,3] {x,y,f(x,y)}
 
             if (points.GetLength(1) != 3)
-                throw new ArgumentException("hatali input dizisi formati");
+                throw new ArgumentException("Invalid input array format");
             int loopCount;
             switch (interpolationMode)
             {
@@ -98,16 +126,16 @@ namespace IPLibrary
                     return points[0, 2];
                 case InterpolationMode.Bilinear:
                     if (points.GetLength(0) != 4)
-                        throw new ArgumentException("enterpolasyon icin yeterli sayida deger yok");
+                        throw new ArgumentException("Insufficient number of values for interpolation");
                     loopCount = 4;
                     break;
                 case InterpolationMode.Bicubic:
                     if (points.GetLength(0) != 16)
-                        throw new ArgumentException("enterpolasyon icin yeterli sayida deger yok");
+                        throw new ArgumentException("Insufficient number of values for interpolation");
                     loopCount = 16;
                     break;
                 default:
-                    throw new ArgumentException("hatali enterpolasyon secimi");
+                    throw new ArgumentException("Invalid interpolation mode");
             }
 
             double[,] A = new double[loopCount, loopCount];
