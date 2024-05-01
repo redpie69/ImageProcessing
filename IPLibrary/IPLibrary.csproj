@@ -42,10 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Operations\Arithmetic\ArithmeticOps.cs" />
+    <Compile Include="Operations\Border\BorderOps.cs" />
+    <Compile Include="Operations\Brightness\BrightnessOps.cs" />
+    <Compile Include="Operations\Contrast\ContrastOps.cs" />
+    <Compile Include="Operations\Convolution\ConvolutionOps.cs" />
+    <Compile Include="Operations\Histogram\HistogramOps.cs" />
     <Compile Include="Processing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Operations\Transformations\ColorSpace.cs" />
+    <Compile Include="Operations\Transformations\Format.cs" />
+    <Compile Include="Operations\Transformations\Geometric.cs" />
     <Compile Include="Utility.cs" />
-    <Compile Include="Utility_Matrix.cs" />
+    <Compile Include="UtilityMatrix.cs" />
+    <Compile Include="Operations\Utility\MatrixElementwiseOps.cs" />
+    <Compile Include="Operations\Utility\MatrixKernelOps.cs" />
+    <Compile Include="Operations\Utility\MatrixMultiplicationOps.cs" />
+    <Compile Include="Operations\Utility\MatrixOps.cs" />
+    <Compile Include="Operations\Utility\MatrixTransformOps.cs" />
+    <Compile Include="Operations\Utility\MatrixVectorOps.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
