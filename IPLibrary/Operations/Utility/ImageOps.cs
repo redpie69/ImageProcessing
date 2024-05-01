@@ -1,15 +1,15 @@
 ﻿using System.Drawing;
 
-namespace IPLibrary.Border
+namespace IPLibrary
 {
-    public partial class BorderOps
+    internal static partial class ImageOps
     {
         /// <summary>
         /// Creates a bitmap with a border around the original image.
         /// </summary>
         /// <param name="image">The original image.</param>
         /// <returns>The bitmap with a border.</returns>
-        public static Bitmap CevresiniDoldurma(Bitmap image)
+        internal static Bitmap CevresiniDoldurma(Bitmap image)
         {
             Bitmap CerceveliBitmap = new Bitmap(image.Width + 1, image.Height + 1);
 
@@ -23,8 +23,23 @@ namespace IPLibrary.Border
                         CerceveliBitmap.SetPixel(x, y, image.GetPixel(x - 1, y - 1));
                 }
             }
-
             return CerceveliBitmap;
+        }
+
+        public static int[,] TurnItToMatrix(Bitmap image)
+        {
+            IP.RGB2GrayScale(image);// ???
+
+            int[,] matrix = new int[image.Width, image.Height];
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    matrix[x, y] = image.GetPixel(x, y).R;
+                }
+            }
+            return matrix;
         }
 
     }

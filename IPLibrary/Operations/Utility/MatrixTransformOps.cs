@@ -2,7 +2,7 @@
 
 namespace IPLibrary.Utility
 {
-    public partial class MatrixOps
+    internal partial class MatrixOps
     {
         /// <summary>
         /// Creates a transformation matrix for a given transformation type and parameters.

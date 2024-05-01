@@ -1,14 +1,12 @@
 ﻿using System.Drawing;
-using IPLibrary.Transformations;
 
-namespace IPLibrary.Histogram
+namespace IPLibrary
 {
-    public partial class HistogramOps
+    public static partial class IP
     {
-
         public static int[] HistogramCreator(Bitmap image)
         {
-            ColorSpaceTransformation.RGB2GrayScale(image); // ???
+            RGB2GrayScale(image); // ???
 
             int[] histogram = new int[256];
 
@@ -43,7 +41,7 @@ namespace IPLibrary.Histogram
 
         public static void HistogramGerme(Bitmap image, int max, int min)
         {
-            ColorSpaceTransformation.RGB2GrayScale(image);
+            RGB2GrayScale(image);
 
             int imgMin = 255;
             int imgMax = 0;
@@ -73,7 +71,7 @@ namespace IPLibrary.Histogram
 
         public static void HistogramGenisletme(Bitmap image)
         {
-            ColorSpaceTransformation.RGB2GrayScale(image);
+            RGB2GrayScale(image);
 
             double imgMin = 255;
             double imgMax = 0;

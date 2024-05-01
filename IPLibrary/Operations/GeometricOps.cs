@@ -3,9 +3,17 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using IPLibrary.Utility;
 
-namespace IPLibrary.Transformations
+namespace IPLibrary
 {
-    public static class GeometricTranformation
+    public enum Transforms
+    {
+        Rotate,
+        Translation,
+        Scaling,
+        ShearVertical,
+        ShearHorizantal,
+    }
+    public static partial class IP
     {
         public static void FlipHorizontal(Bitmap image)
         {

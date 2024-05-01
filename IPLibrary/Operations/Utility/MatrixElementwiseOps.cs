@@ -2,7 +2,7 @@
 
 namespace IPLibrary.Utility
 {
-    public partial class MatrixOps
+    internal partial class MatrixOps
     {
         public static int[,] MatrixElementwiseOperations(int[,] A, int[,] B, ArithmeticOperations operation)
         {

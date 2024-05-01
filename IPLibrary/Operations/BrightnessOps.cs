@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace IPLibrary.Brightness
+namespace IPLibrary
 {
-    public partial class BrightnessOps
+    public static partial class IP
     {
         public static void Brightness(Bitmap image, int a)
         {

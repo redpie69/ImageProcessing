@@ -2,7 +2,7 @@
 
 namespace IPLibrary.Utility
 {
-    public partial class MatrixOps
+    internal partial class MatrixOps
     {
         private static double InnerProduct(double[] a, double[] b)
         {

@@ -42,19 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Operations\Arithmetic\ArithmeticOps.cs" />
-    <Compile Include="Operations\Border\BorderOps.cs" />
-    <Compile Include="Operations\Brightness\BrightnessOps.cs" />
-    <Compile Include="Operations\Contrast\ContrastOps.cs" />
-    <Compile Include="Operations\Convolution\ConvolutionOps.cs" />
-    <Compile Include="Operations\Histogram\HistogramOps.cs" />
-    <Compile Include="Processing.cs" />
+    <Compile Include="Operations\ArithmeticOps.cs" />
+    <Compile Include="Operations\Utility\ImageOps.cs" />
+    <Compile Include="Operations\BrightnessOps.cs" />
+    <Compile Include="Operations\ContrastOps.cs" />
+    <Compile Include="Operations\ConvolutionOps.cs" />
+    <Compile Include="Operations\HistogramOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Operations\Transformations\ColorSpace.cs" />
-    <Compile Include="Operations\Transformations\Format.cs" />
-    <Compile Include="Operations\Transformations\Geometric.cs" />
-    <Compile Include="Utility.cs" />
-    <Compile Include="UtilityMatrix.cs" />
+    <Compile Include="Operations\ColorSpaceOps.cs" />
+    <Compile Include="Operations\GeometricOps.cs" />
     <Compile Include="Operations\Utility\MatrixElementwiseOps.cs" />
     <Compile Include="Operations\Utility\MatrixKernelOps.cs" />
     <Compile Include="Operations\Utility\MatrixMultiplicationOps.cs" />

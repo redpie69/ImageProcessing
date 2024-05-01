@@ -1,6 +1,6 @@
 ﻿namespace IPLibrary.Utility
 {
-    public partial class MatrixOps
+    internal partial class MatrixOps
     {
         public static int[,] KerneliDondur(int[,] kernel)
         {

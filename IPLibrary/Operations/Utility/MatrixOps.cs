@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 
 namespace IPLibrary.Utility
 {
-    public partial class MatrixOps
+    internal partial class MatrixOps
     {
         /// <summary>
         /// Performs interpolation on a set of points to determine the value at a given destination point.

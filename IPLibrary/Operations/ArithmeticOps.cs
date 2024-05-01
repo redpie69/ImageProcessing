@@ -1,18 +1,24 @@
-﻿using IPLibrary.Transformations;
-using IPLibrary.Utility;
+﻿using IPLibrary.Utility;
 using System.Drawing;
 
-namespace IPLibrary.Arithmetic
+namespace IPLibrary
 {
-    public partial class ArithmeticOps
+    public enum ArithmeticOperations
+    {
+        Add,
+        Subtract,
+        Multiply,
+        Divide
+    }
+    public static partial class IP
     {
         public static Bitmap ArithmeticOperation(Bitmap image1, Bitmap image2, ArithmeticOperations operation)
         {
             int width = image1.Width >= image2.Width ? image1.Width : image2.Width;
             int height = image1.Height >= image2.Height ? image1.Height : image2.Height;
 
-            ColorSpaceTransformation.RGB2GrayScale(image1);
-            ColorSpaceTransformation.RGB2GrayScale(image2);
+            RGB2GrayScale(image1);
+            RGB2GrayScale(image2);
 
             int[,] matrix1 = new int[width, height];
             int[,] matrix2 = new int[width, height];
@@ -58,10 +64,7 @@ namespace IPLibrary.Arithmetic
                     newImage.SetPixel(x, y, newColor);
                 }
             }
-
             return newImage;
         }
-
-
     }
 }

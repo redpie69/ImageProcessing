@@ -1,12 +1,10 @@
-﻿using IPLibrary.Border;
-using IPLibrary.Transformations;
-using IPLibrary.Utility;
+﻿using IPLibrary.Utility;
 using System;
 using System.Drawing;
 
-namespace IPLibrary.Convolution
+namespace IPLibrary
 {
-    public partial class ConvolutionOps
+    public static partial class IP
     {
         public static void Konvolusyon(Bitmap image, double[,] kernel)
         {
@@ -19,9 +17,9 @@ namespace IPLibrary.Convolution
                 throw new ArgumentException("kernelin eni ve boyu tek sayi olmali");
             }
 
-            Bitmap cerceveli = BorderOps.CevresiniDoldurma(image);
+            Bitmap cerceveli = ImageOps.CevresiniDoldurma(image);
             double[,] dondurulmusKernel = MatrixOps.KerneliDondur(kernel);
-            int[,] matrisHali = FormatTransformation.TurnItToMatrix(cerceveli);
+            int[,] matrisHali = ImageOps.TurnItToMatrix(cerceveli);
 
             int kernelBoyutu = kernel.GetLength(0);
             int merkezdenUzaklik = kernelBoyutu / 2;
@@ -62,7 +60,5 @@ namespace IPLibrary.Convolution
                 }
             }
         }
-
-
     }
 }

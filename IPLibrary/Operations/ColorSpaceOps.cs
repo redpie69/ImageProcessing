@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace IPLibrary.Transformations
+namespace IPLibrary
 {
-    public partial class ColorSpaceTransformation
+    public static partial class IP
     {
         public static void RGB2GrayScale(Bitmap image)
         {

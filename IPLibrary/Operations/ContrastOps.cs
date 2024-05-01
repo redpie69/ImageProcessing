@@ -1,10 +1,9 @@
-﻿using IPLibrary.Transformations;
-using IPLibrary.Utility;
+﻿using IPLibrary.Utility;
 using System.Drawing;
 
-namespace IPLibrary.Contrast
+namespace IPLibrary
 {
-    public partial class ContrastOps
+    public static partial class IP
     {
         public static void Constrast(Bitmap image, double a)
         {
@@ -39,7 +38,7 @@ namespace IPLibrary.Contrast
         }
         public static void KontrastAyari(Bitmap image, double oran)
         {
-            ColorSpaceTransformation.RGB2GrayScale(image);
+            RGB2GrayScale(image);
             double[,] imageMatrix = new double[image.Width, image.Height];
             for (int y = 0; y < image.Height; y++)
             {
