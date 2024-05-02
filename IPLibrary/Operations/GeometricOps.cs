@@ -91,8 +91,8 @@ namespace IPLibrary
             double[,] transformMatrix = MatrixOps.MatrixMultiplication(intermediate, translateToOrigin);
             double[,] reversed = MatrixOps.MatrixInverse(transformMatrix);
 
-            double[,] V = new double[3, 1];
-            double[,] F = new double[3, 1];
+            double[,] v = new double[3, 1];
+            double[,] f;
             switch (mode)
             {
                 case InterpolationMode.NearestNeighbor:
@@ -100,15 +100,15 @@ namespace IPLibrary
                     {
                         for (int y = 0; y < image.Height; y++)
                         {
-                            V[0, 0] = x;
-                            V[1, 0] = y;
-                            V[2, 0] = 1;
-                            F = MatrixOps.MatrixMultiplication(reversed, V);
-                            F[0, 0] = Math.Round(F[0, 0]);
-                            F[1, 0] = Math.Round(F[1, 0]);
-                            if (F[0, 0] >= 0 && F[0, 0] < oldImage.Width && F[1, 0] >= 0 && F[1, 0] < oldImage.Height)
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+                            f = MatrixOps.MatrixMultiplication(reversed, v);
+                            f[0, 0] = Math.Round(f[0, 0]);
+                            f[1, 0] = Math.Round(f[1, 0]);
+                            if (f[0, 0] >= 0 && f[0, 0] < oldImage.Width && f[1, 0] >= 0 && f[1, 0] < oldImage.Height)
                             {
-                                Color colorToAssign = oldImage.GetPixel((int)F[0, 0], (int)F[1, 0]);
+                                Color colorToAssign = oldImage.GetPixel((int)f[0, 0], (int)f[1, 0]);
                                 image.SetPixel(x, y, colorToAssign);
                             }
                             else
@@ -122,11 +122,11 @@ namespace IPLibrary
                     {
                         for (int y = 0; y < oldImage.Height; y++)
                         {
-                            V[0, 0] = x;
-                            V[1, 0] = y;
-                            V[2, 0] = 1;
-                            F = MatrixOps.MatrixMultiplication(reversed, V);
-                            int[,] points = MatrixOps.NeighbourhoodCreator(F, 4);
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+                            f = MatrixOps.MatrixMultiplication(reversed, v);
+                            int[,] points = MatrixOps.NeighbourhoodCreator(f, 4);
                             int[,] pointsR = (int[,])points.Clone();
                             int[,] pointsG = (int[,])points.Clone();
                             int[,] pointsB = (int[,])points.Clone();
@@ -151,9 +151,9 @@ namespace IPLibrary
                             int green;
                             int blue;
 
-                            red = (int)MatrixOps.Interpolation(pointsR, F[0, 0], F[1, 0], InterpolationMode.Bilinear);
-                            green = (int)MatrixOps.Interpolation(pointsG, F[0, 0], F[1, 0], InterpolationMode.Bilinear);
-                            blue = (int)MatrixOps.Interpolation(pointsB, F[0, 0], F[1, 0], InterpolationMode.Bilinear);
+                            red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
 
                             Color colorToAssign = Color.FromArgb(red, green, blue);
                             image.SetPixel(x, y, colorToAssign);
@@ -166,11 +166,11 @@ namespace IPLibrary
                     {
                         for (int y = 0; y < oldImage.Height; y++)
                         {
-                            V[0, 0] = x;
-                            V[1, 0] = y;
-                            V[2, 0] = 1;
-                            F = MatrixOps.MatrixMultiplication(reversed, V);
-                            int[,] points = MatrixOps.NeighbourhoodCreator(F, 16);
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+                            f = MatrixOps.MatrixMultiplication(reversed, v);
+                            int[,] points = MatrixOps.NeighbourhoodCreator(f, 16);
                             int[,] pointsR = (int[,])points.Clone();
                             int[,] pointsG = (int[,])points.Clone();
                             int[,] pointsB = (int[,])points.Clone();
@@ -190,9 +190,9 @@ namespace IPLibrary
                                     pointsB[i, 2] = 0;
                                 }
                             }
-                            int red = (int)MatrixOps.Interpolation(pointsR, F[0, 0], F[1, 0], InterpolationMode.Bicubic);
-                            int green = (int)MatrixOps.Interpolation(pointsG, F[0, 0], F[1, 0], InterpolationMode.Bicubic);
-                            int blue = (int)MatrixOps.Interpolation(pointsB, F[0, 0], F[1, 0], InterpolationMode.Bicubic);
+                            int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
+                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
+                            int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
 
                             Color colorToAssign = Color.FromArgb(red, green, blue);
                             image.SetPixel(x, y, colorToAssign);
@@ -204,6 +204,126 @@ namespace IPLibrary
                     throw new ArgumentException("gecersiz enterpolasyon modu");
             }
             oldImage.Dispose();
+        }
+
+        public static Bitmap Scaling(Bitmap image,InterpolationMode mode, int width, int height)
+        {
+            Bitmap newImage = new Bitmap(width, height);
+            double[] matrisCreatorParameters = { width / image.Width, height / image.Height };
+            double[,] translationMatrix = MatrixOps.TransformMatrisCreator(Transforms.Scaling, matrisCreatorParameters);
+            double[,] reversedTransMatrix = MatrixOps.MatrixInverse(translationMatrix);
+
+            double[,] f;
+            double[,] v = new double[3, 1];
+
+            switch (mode)
+            {
+                case InterpolationMode.Bilinear:
+                    for(int y = 0; y < height;y++)
+                    {
+                        for(int x=0;x< width;x++)
+                        {
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+
+                            f = MatrixOps.MatrixMultiplication(reversedTransMatrix, v);
+
+                            int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 4);
+                            int[,] pointsG = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
+                            int[,] pointsB = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
+                            pointsR.CopyTo(pointsG, 0);
+                            pointsR.CopyTo(pointsB, 0);
+
+                            for(int i=0;i<pointsR.GetLength(0);i++)
+                            {
+                                if (pointsR[i,0] >=0 && pointsR[i,0] < width && pointsR[i,1] >=0 && pointsR[i,1] < height)
+                                {
+                                    pointsR[i, 2] = image.GetPixel(pointsR[i,0], pointsR[i,1]).R;
+                                    pointsG[i, 2] = image.GetPixel(pointsG[i, 0], pointsG[i, 1]).G;
+                                    pointsB[i, 2] = image.GetPixel (pointsB[i, 0], pointsB[i, 1]).B;
+                                }
+                                else
+                                {
+                                    pointsR[i, 2] = 0;
+                                    pointsG[i, 2] = 0;
+                                    pointsB[i, 2] = 0;
+                                }
+                            }
+
+                            int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1,0], InterpolationMode.Bilinear);
+                            int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+
+                            newImage.SetPixel(x, y, Color.FromArgb(red, green, blue));
+                        }
+                    }
+                    break;
+                case InterpolationMode.Bicubic:
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+
+                            f = MatrixOps.MatrixMultiplication(reversedTransMatrix, v);
+
+                            int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 16);
+                            int[,] pointsG = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
+                            int[,] pointsB = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
+                            pointsR.CopyTo(pointsG, 0);
+                            pointsR.CopyTo(pointsB, 0);
+
+                            for (int i = 0; i < pointsR.GetLength(0); i++)
+                            {
+                                if (pointsR[i, 0] >= 0 && pointsR[i, 0] < width && pointsR[i, 1] >= 0 && pointsR[i, 1] < height)
+                                {
+                                    pointsR[i, 2] = image.GetPixel(pointsR[i, 0], pointsR[i, 1]).R;
+                                    pointsG[i, 2] = image.GetPixel(pointsG[i, 0], pointsG[i, 1]).G;
+                                    pointsB[i, 2] = image.GetPixel(pointsB[i, 0], pointsB[i, 1]).B;
+                                }
+                                else
+                                {
+                                    pointsR[i, 2] = 0;
+                                    pointsG[i, 2] = 0;
+                                    pointsB[i, 2] = 0;
+                                }
+                            }
+
+                            int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+
+                            newImage.SetPixel(x, y, Color.FromArgb(red, green, blue));
+                        }
+                    }
+                    break;
+                case InterpolationMode.NearestNeighbor:
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            v[0, 0] = x;
+                            v[1, 0] = y;
+                            v[2, 0] = 1;
+
+                            f = MatrixOps.MatrixMultiplication(reversedTransMatrix, v);
+
+                            int fX = (int)f[0, 0];
+                            int fY = (int)f[1, 0];
+
+                            newImage.SetPixel(x, y, image.GetPixel(fX, fY));
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentException("gecerli bir enterpolasyon yontemi secin");
+            }
+
+            return newImage;
         }
     }
 }
