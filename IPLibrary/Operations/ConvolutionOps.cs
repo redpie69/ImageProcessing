@@ -84,7 +84,10 @@ namespace IPLibrary
                         for(int j=0;j<filterSize;j++)
                         {
                             if ((leftTopX + i) < 0 || (leftTopX + i) >= image.Width || (leftTopY + j) < 0 || (leftTopY + j) >= image.Height)
+                            {
                                 filter[i, j] = Color.Black;
+                                continue;
+                            }
                             filter[i,j]=image.GetPixel(leftTopX+i, leftTopY+j);
                         }
                     }
