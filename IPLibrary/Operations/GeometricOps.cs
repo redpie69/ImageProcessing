@@ -232,8 +232,8 @@ namespace IPLibrary
                             int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 4);
                             int[,] pointsG = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
                             int[,] pointsB = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
-                            pointsR.CopyTo(pointsG, 0);
-                            pointsR.CopyTo(pointsB, 0);
+                            pointsG=(int[,])pointsR.Clone();
+                            pointsB=(int[,])pointsR.Clone();
 
                             for(int i=0;i<pointsR.GetLength(0);i++)
                             {
@@ -274,8 +274,8 @@ namespace IPLibrary
                             int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 16);
                             int[,] pointsG = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
                             int[,] pointsB = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
-                            pointsR.CopyTo(pointsG, 0);
-                            pointsR.CopyTo(pointsB, 0);
+                            pointsG = (int[,])pointsR.Clone();
+                            pointsB = (int[,])pointsR.Clone();
 
                             for (int i = 0; i < pointsR.GetLength(0); i++)
                             {
@@ -293,9 +293,9 @@ namespace IPLibrary
                                 }
                             }
 
-                            int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
-                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
-                            int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
+                            int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
+                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
+                            int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bicubic);
 
                             newImage.SetPixel(x, y, Color.FromArgb(red, green, blue));
                         }
