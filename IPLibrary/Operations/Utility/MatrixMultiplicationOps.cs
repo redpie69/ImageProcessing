@@ -12,11 +12,13 @@ namespace IPLibrary.Utility
         /// <returns>The result of the scalar multiplication.</returns>
         public static double[,] ScalarMultiplication(double[,] A, double s)
         {
-            double[,] result = new double[A.GetLength(0), A.GetLength(1)];
+            int rows = A.GetLength(0);
+            int columns = A.GetLength(1);
+            double[,] result = new double[rows, columns];
 
-            for (int i = 0; i < A.GetLength(0); i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < A.GetLength(1); j++)
+                for (int j = 0; j < columns; j++)
                 {
                     result[i, j] = A[i, j] * s;
                 }
@@ -32,11 +34,13 @@ namespace IPLibrary.Utility
         /// <returns>The result of the scalar multiplication.</returns>
         public static double[,] ScalarMultiplication(int[,] A, double s)
         {
-            double[,] result = new double[A.GetLength(0), A.GetLength(1)];
+            int rows = A.GetLength(0);
+            int columns = A.GetLength(1);
+            double[,] result = new double[rows, columns];
 
-            for (int i = 0; i < A.GetLength(0); i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < A.GetLength(1); j++)
+                for (int j = 0; j < columns; j++)
                 {
                     result[i, j] = A[i, j] * s;
                 }
@@ -52,25 +56,29 @@ namespace IPLibrary.Utility
         /// <returns>The result of the matrix multiplication.</returns>
         public static int[,] MatrixMultiplication(int[,] first, int[,] second)
         {
-            if (first.GetLength(1) != second.GetLength(0))
+            int rowsA = first.GetLength(0);
+            int colsA = first.GetLength(1);
+            int colsB = second.GetLength(1);
+
+            if (colsA != second.GetLength(0))
                 throw new Exception("Illegal matrix multiplication");
 
-            int[,] outcomeMatrix = new int[first.GetLength(0), second.GetLength(1)];
-            int sum = 0;
+            int[,] result = new int[rowsA, colsB];
 
-            for (int i = 0; i < outcomeMatrix.GetLength(0); i++)
+            for (int i = 0; i < rowsA; i++)
             {
-                for (int j = 0; j < outcomeMatrix.GetLength(1); j++)
+                for (int j = 0; j < colsB; j++)
                 {
-                    sum = 0;
-                    for (int k = 0; k < first.GetLength(1); k++)
+                    int sum = 0;
+                    for (int k = 0; k < colsA; k++)
                     {
                         sum += first[i, k] * second[k, j];
                     }
-                    outcomeMatrix[i, j] = sum;
+                    result[i, j] = sum;
                 }
             }
-            return outcomeMatrix;
+
+            return result;
         }
 
         /// <summary>
@@ -81,26 +89,29 @@ namespace IPLibrary.Utility
         /// <returns>The result of the matrix multiplication.</returns>
         public static double[,] MatrixMultiplication(double[,] first, double[,] second)
         {
-            if (first.GetLength(1) != second.GetLength(0))
+            int rowsA = first.GetLength(0);
+            int colsA = first.GetLength(1);
+            int colsB = second.GetLength(1);
+
+            if (colsA != second.GetLength(0))
                 throw new Exception("Illegal matrix multiplication");
 
-            double[,] outcomeMatrix = new double[first.GetLength(0), second.GetLength(1)];
-            double sum = 0;
+            double[,] result = new double[rowsA, colsB];
 
-            for (int i = 0; i < outcomeMatrix.GetLength(0); i++)
+            for (int i = 0; i < rowsA; i++)
             {
-                for (int j = 0; j < outcomeMatrix.GetLength(1); j++)
+                for (int j = 0; j < colsB; j++)
                 {
-                    sum = 0;
-                    for (int k = 0; k < first.GetLength(1); k++)
+                    double sum = 0;
+                    for (int k = 0; k < colsA; k++)
                     {
                         sum += first[i, k] * second[k, j];
                     }
-                    outcomeMatrix[i, j] = sum;
+                    result[i, j] = sum;
                 }
             }
-            return outcomeMatrix;
-        }
 
+            return result;
+        }
     }
 }
