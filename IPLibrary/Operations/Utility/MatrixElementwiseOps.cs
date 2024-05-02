@@ -4,6 +4,13 @@ namespace IPLibrary.Utility
 {
     internal partial class MatrixOps
     {
+        /// <summary>
+        /// Performs element-wise operations on two matrices of integers.
+        /// </summary>
+        /// <param name="A">The first matrix.</param>
+        /// <param name="B">The second matrix.</param>
+        /// <param name="operation">The arithmetic operation to perform.</param>
+        /// <returns>The result matrix.</returns>
         public static int[,] MatrixElementwiseOperations(int[,] A, int[,] B, ArithmeticOperations operation)
         {
             if (A.GetLength(0) != B.GetLength(0) || A.GetLength(1) != B.GetLength(1))
@@ -56,6 +63,13 @@ namespace IPLibrary.Utility
             return result;
         }
 
+        /// <summary>
+        /// Performs element-wise operations on two matrices of doubles.
+        /// </summary>
+        /// <param name="A">The first matrix.</param>
+        /// <param name="B">The second matrix.</param>
+        /// <param name="operation">The arithmetic operation to perform.</param>
+        /// <returns>The result matrix.</returns>
         public static double[,] MatrixElementwiseOperations(double[,] A, double[,] B, ArithmeticOperations operation)
         {
             if (A.GetLength(0) != B.GetLength(0) || A.GetLength(1) != B.GetLength(1))
