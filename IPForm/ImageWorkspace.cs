@@ -98,7 +98,6 @@ namespace IPForm
             SetImage(Image);
         }
 
-        // draw the histogram of the image to chartPic
         private void drawGrayHistogram()
         {
             // get the count of each gray level
@@ -175,7 +174,8 @@ namespace IPForm
             try
             {
                 _ = MessageBox.Show($"{value}");
-                _ = IP.Scaling((Bitmap)Image, System.Drawing.Drawing2D.InterpolationMode.Bilinear, width, height);
+                Bitmap zoomedImage = IP.Scaling((Bitmap)Image, System.Drawing.Drawing2D.InterpolationMode.Bilinear, width, height);
+                SetImage(zoomedImage);
             }
             catch (Exception ex)
             {
@@ -319,7 +319,22 @@ namespace IPForm
             }
             RefreshWorkspace();
             SetControlsEnabledTo(true);
+        }
 
+        private void buttonFilterMedian_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.MedianFilter((Bitmap)Image, 5);
+            }
+            catch (Exception ex)
+            {
+                // return the error message
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
         }
     }
 }

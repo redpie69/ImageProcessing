@@ -9,9 +9,9 @@ namespace IPForm
             InitializeComponent();
         }
 
-        private void buttonPic1Load_Click(object sender, System.EventArgs e)
+        private void buttonTransfer_Click(object sender, System.EventArgs e)
         {
-
+            multiImageWorkspace1.TransferImages(imageWorkspace1.Image, imageWorkspace2.Image);
         }
     }
 }

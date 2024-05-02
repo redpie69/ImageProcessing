@@ -28,9 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.buttonTransfer = new System.Windows.Forms.Button();
+            this.multiImageWorkspace1 = new IPForm.MultiImageWorkspace();
             this.imageWorkspace2 = new IPForm.ImageWorkspace();
             this.imageWorkspace1 = new IPForm.ImageWorkspace();
             this.SuspendLayout();
+            // 
+            // buttonTransfer
+            // 
+            this.buttonTransfer.Location = new System.Drawing.Point(871, 581);
+            this.buttonTransfer.Name = "buttonTransfer";
+            this.buttonTransfer.Size = new System.Drawing.Size(217, 38);
+            this.buttonTransfer.TabIndex = 120;
+            this.buttonTransfer.Text = "Resimleri Aktar";
+            this.buttonTransfer.UseVisualStyleBackColor = true;
+            this.buttonTransfer.Click += new System.EventHandler(this.buttonTransfer_Click);
+            // 
+            // multiImageWorkspace1
+            // 
+            this.multiImageWorkspace1.ImageA = null;
+            this.multiImageWorkspace1.ImageB = null;
+            this.multiImageWorkspace1.ImageDisplay = null;
+            this.multiImageWorkspace1.Location = new System.Drawing.Point(870, 8);
+            this.multiImageWorkspace1.Name = "multiImageWorkspace1";
+            this.multiImageWorkspace1.Size = new System.Drawing.Size(218, 566);
+            this.multiImageWorkspace1.TabIndex = 119;
             // 
             // imageWorkspace2
             // 
@@ -59,7 +81,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1264, 861);
+            this.ClientSize = new System.Drawing.Size(1104, 861);
+            this.Controls.Add(this.buttonTransfer);
+            this.Controls.Add(this.multiImageWorkspace1);
             this.Controls.Add(this.imageWorkspace2);
             this.Controls.Add(this.imageWorkspace1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -73,6 +97,8 @@
         #endregion
         private ImageWorkspace imageWorkspace1;
         private ImageWorkspace imageWorkspace2;
+        private MultiImageWorkspace multiImageWorkspace1;
+        private System.Windows.Forms.Button buttonTransfer;
     }
 }
 

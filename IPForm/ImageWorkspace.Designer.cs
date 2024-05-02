@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.groupBoxColorSpaceOps = new System.Windows.Forms.GroupBox();
             this.buttonGray2RGB = new System.Windows.Forms.Button();
             this.buttonColorSpaceRGB2Gray = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.button25 = new System.Windows.Forms.Button();
             this.groupBoxNoiseOps = new System.Windows.Forms.GroupBox();
             this.button22 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
+            this.buttonFilterMedian = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.groupBoxMorfOps = new System.Windows.Forms.GroupBox();
             this.button19 = new System.Windows.Forms.Button();
@@ -320,7 +320,7 @@
             // 
             this.groupBoxNoiseOps.BackColor = System.Drawing.SystemColors.Info;
             this.groupBoxNoiseOps.Controls.Add(this.button22);
-            this.groupBoxNoiseOps.Controls.Add(this.button21);
+            this.groupBoxNoiseOps.Controls.Add(this.buttonFilterMedian);
             this.groupBoxNoiseOps.Controls.Add(this.button20);
             this.groupBoxNoiseOps.Location = new System.Drawing.Point(3, 444);
             this.groupBoxNoiseOps.Name = "groupBoxNoiseOps";
@@ -340,16 +340,17 @@
             this.button22.Text = "Salt And Pepper";
             this.button22.UseVisualStyleBackColor = true;
             // 
-            // button21
+            // buttonFilterMedian
             // 
-            this.button21.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button21.Location = new System.Drawing.Point(239, 16);
-            this.button21.Margin = new System.Windows.Forms.Padding(0);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(87, 26);
-            this.button21.TabIndex = 115;
-            this.button21.Text = "Median";
-            this.button21.UseVisualStyleBackColor = true;
+            this.buttonFilterMedian.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonFilterMedian.Location = new System.Drawing.Point(239, 16);
+            this.buttonFilterMedian.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonFilterMedian.Name = "buttonFilterMedian";
+            this.buttonFilterMedian.Size = new System.Drawing.Size(87, 26);
+            this.buttonFilterMedian.TabIndex = 115;
+            this.buttonFilterMedian.Text = "Median";
+            this.buttonFilterMedian.UseVisualStyleBackColor = true;
+            this.buttonFilterMedian.Click += new System.EventHandler(this.buttonFilterMedian_Click);
             // 
             // button20
             // 
@@ -974,8 +975,8 @@
             // 
             // chartPic
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartPic.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chartPic.ChartAreas.Add(chartArea1);
             this.chartPic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPic.Location = new System.Drawing.Point(0, 0);
             this.chartPic.Margin = new System.Windows.Forms.Padding(0);
@@ -1086,7 +1087,7 @@
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.GroupBox groupBoxNoiseOps;
         private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button buttonFilterMedian;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.GroupBox groupBoxMorfOps;
         private System.Windows.Forms.Button button19;
