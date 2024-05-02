@@ -1,7 +1,7 @@
-﻿using System;
+﻿using IPLibrary.Utility;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using IPLibrary.Utility;
 
 namespace IPLibrary
 {
@@ -32,7 +32,7 @@ namespace IPLibrary
         public static Bitmap Crop(Bitmap image, Point topLeft, Point bottomRight)
         {
             int height = topLeft.Y - bottomRight.Y;
-            int width = topLeft.X - bottomRight.X;
+            int width = bottomRight.X - topLeft.X;
             int mappedX;
             int mappedY;
 
@@ -206,7 +206,7 @@ namespace IPLibrary
             oldImage.Dispose();
         }
 
-        public static Bitmap Scaling(Bitmap image,InterpolationMode mode, int width, int height)
+        public static Bitmap Scaling(Bitmap image, InterpolationMode mode, int width, int height)
         {
             Bitmap newImage = new Bitmap(width, height);
             double[] matrisCreatorParameters = { width / image.Width, height / image.Height };
@@ -219,9 +219,9 @@ namespace IPLibrary
             switch (mode)
             {
                 case InterpolationMode.Bilinear:
-                    for(int y = 0; y < height;y++)
+                    for (int y = 0; y < height; y++)
                     {
-                        for(int x=0;x< width;x++)
+                        for (int x = 0; x < width; x++)
                         {
                             v[0, 0] = x;
                             v[1, 0] = y;
@@ -230,18 +230,18 @@ namespace IPLibrary
                             f = MatrixOps.MatrixMultiplication(reversedTransMatrix, v);
 
                             int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 4);
-                            int[,] pointsG = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
-                            int[,] pointsB = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
+                            int[,] pointsG = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
+                            int[,] pointsB = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
                             pointsR.CopyTo(pointsG, 0);
                             pointsR.CopyTo(pointsB, 0);
 
-                            for(int i=0;i<pointsR.GetLength(0);i++)
+                            for (int i = 0; i < pointsR.GetLength(0); i++)
                             {
-                                if (pointsR[i,0] >=0 && pointsR[i,0] < width && pointsR[i,1] >=0 && pointsR[i,1] < height)
+                                if (pointsR[i, 0] >= 0 && pointsR[i, 0] < width && pointsR[i, 1] >= 0 && pointsR[i, 1] < height)
                                 {
-                                    pointsR[i, 2] = image.GetPixel(pointsR[i,0], pointsR[i,1]).R;
+                                    pointsR[i, 2] = image.GetPixel(pointsR[i, 0], pointsR[i, 1]).R;
                                     pointsG[i, 2] = image.GetPixel(pointsG[i, 0], pointsG[i, 1]).G;
-                                    pointsB[i, 2] = image.GetPixel (pointsB[i, 0], pointsB[i, 1]).B;
+                                    pointsB[i, 2] = image.GetPixel(pointsB[i, 0], pointsB[i, 1]).B;
                                 }
                                 else
                                 {
@@ -252,7 +252,7 @@ namespace IPLibrary
                             }
 
                             int red = (int)MatrixOps.Interpolation(pointsR, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
-                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1,0], InterpolationMode.Bilinear);
+                            int green = (int)MatrixOps.Interpolation(pointsG, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
                             int blue = (int)MatrixOps.Interpolation(pointsB, f[0, 0], f[1, 0], InterpolationMode.Bilinear);
 
                             newImage.SetPixel(x, y, Color.FromArgb(red, green, blue));
