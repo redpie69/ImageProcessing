@@ -209,7 +209,7 @@ namespace IPLibrary
         public static Bitmap Scaling(Bitmap image, InterpolationMode mode, int width, int height)
         {
             Bitmap newImage = new Bitmap(width, height);
-            double[] matrisCreatorParameters = { width / image.Width, height / image.Height };
+            double[] matrisCreatorParameters = { (double)width / image.Width, (double)height / image.Height };
             double[,] translationMatrix = MatrixOps.TransformMatrisCreator(Transforms.Scaling, matrisCreatorParameters);
             double[,] reversedTransMatrix = MatrixOps.MatrixInverse(translationMatrix);
 
@@ -237,7 +237,7 @@ namespace IPLibrary
 
                             for (int i = 0; i < pointsR.GetLength(0); i++)
                             {
-                                if (pointsR[i, 0] >= 0 && pointsR[i, 0] < width && pointsR[i, 1] >= 0 && pointsR[i, 1] < height)
+                                if (pointsR[i, 0] >= 0 && pointsR[i, 0] < image.Width && pointsR[i, 1] >= 0 && pointsR[i, 1] < image.Height)
                                 {
                                     pointsR[i, 2] = image.GetPixel(pointsR[i, 0], pointsR[i, 1]).R;
                                     pointsG[i, 2] = image.GetPixel(pointsG[i, 0], pointsG[i, 1]).G;
