@@ -26,6 +26,11 @@ namespace IPLibrary
             return CerceveliBitmap;
         }
 
+        /// <summary>
+        /// Converts the given image to a matrix representation.
+        /// </summary>
+        /// <param name="image">The image to convert.</param>
+        /// <returns>The matrix representation of the image.</returns>
         public static int[,] TurnItToMatrix(Bitmap image)
         {
             IP.RGB2GrayScale(image);// ???
