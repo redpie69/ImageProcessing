@@ -60,5 +60,63 @@ namespace IPLibrary
                 }
             }
         }
+
+        
+        public static void MedianFilter(Bitmap image, int filterSize) // filtre alaninin bir kenarinin uzunlugu
+        {
+            if (filterSize <= 3)
+                throw new ArgumentException("filtre boyutu 3 ve daha buyuk olabilir");
+            if (filterSize % 2 != 1)
+                throw new ArgumentException("filtre boyutu tek sayi olmalidir");
+
+
+            Color[,] filter = new Color[filterSize, filterSize];
+
+            for(int y=0;y<image.Height;y++)
+            {
+                for(int x=0;x<image.Width;x++)
+                {
+                    int leftTopX = x - (filterSize + 1) / 2 - 1;
+                    int leftTopY = y - (filterSize + 1) / 2 - 1;
+
+                    for (int i=0;i<filterSize;i++)
+                    {
+                        for(int j=0;j<filterSize;j++)
+                        {
+                            if ((leftTopX + i) < 0 || (leftTopX + i) >= image.Width || (leftTopY + j) < 0 || (leftTopY + j) >= image.Height)
+                            {
+                                filter[i, j] = Color.Black;
+                                continue;
+                            }
+                            filter[i,j]=image.GetPixel(leftTopX+i, leftTopY+j);
+                        }
+                    }
+                    int arraySize = filterSize * filterSize;
+                    int[] red = new int[arraySize];
+                    int[] green = new int[arraySize];
+                    int[] blue = new int[arraySize];
+
+                    for(int i=0;i<arraySize;i++)
+                    {
+                        red[i] = filter[i%filterSize,i/filterSize].R;
+                        green[i] = filter[i % filterSize, i / filterSize].G;
+                        blue[i] = filter[i % filterSize, i / filterSize].B;
+                    }
+
+                    Array.Sort(red);
+                    Array.Sort(green);
+                    Array.Sort(blue);
+
+                    int mid = (arraySize + 1) / 2;
+                    
+                    Color newColor = Color.FromArgb(red[mid], green[mid], blue[mid]);
+
+                    image.SetPixel(x,y, newColor);
+                }
+            }
+
+            
+        }
+
     }
 }
