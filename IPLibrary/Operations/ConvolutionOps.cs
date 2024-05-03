@@ -64,7 +64,7 @@ namespace IPLibrary
         
         public static void MedianFilter(Bitmap image, int filterSize) // filtre alaninin bir kenarinin uzunlugu
         {
-            if (filterSize <= 3)
+            if (filterSize < 3)
                 throw new ArgumentException("filtre boyutu 3 ve daha buyuk olabilir");
             if (filterSize % 2 != 1)
                 throw new ArgumentException("filtre boyutu tek sayi olmalidir");
