@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace IPLibrary
 {
@@ -38,6 +39,28 @@ namespace IPLibrary
                         newColor = Color.Black;
 
                     image.SetPixel(x, y, newColor);
+                }
+            }
+        }
+
+        public static void CiftEsikleme(Bitmap image,int altEsik,int ustEsik)
+        {
+            RGB2GrayScale(image);
+
+            for(int y=0; y<image.Height; y++)
+            {
+                for(int x=0; x<image.Width; x++)
+                {
+                    int intensity = image.GetPixel(x, y).R;
+
+                    if(intensity>=altEsik && intensity <=ustEsik)
+                    {
+                        image.SetPixel(x, y, Color.White);
+                    }
+                    else
+                    {
+                        image.SetPixel(x,y,Color.Black);
+                    }
                 }
             }
         }
