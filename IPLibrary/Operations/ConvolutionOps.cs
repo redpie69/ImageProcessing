@@ -76,8 +76,8 @@ namespace IPLibrary
             {
                 for(int x=0;x<image.Width;x++)
                 {
-                    int leftTopX = x - (filterSize + 1) / 2 - 1;
-                    int leftTopY = y - (filterSize + 1) / 2 - 1;
+                    int leftTopX = x - ((filterSize + 1) / 2 - 1);
+                    int leftTopY = y - ((filterSize + 1) / 2 - 1);
 
                     for (int i=0;i<filterSize;i++)
                     {
@@ -98,9 +98,9 @@ namespace IPLibrary
 
                     for(int i=0;i<arraySize;i++)
                     {
-                        red[i] = filter[i%filterSize,i/filterSize].R;
-                        green[i] = filter[i % filterSize, i / filterSize].G;
-                        blue[i] = filter[i % filterSize, i / filterSize].B;
+                        red[i] = filter[i/filterSize,i%filterSize].R;
+                        green[i] = filter[i / filterSize, i % filterSize].G;
+                        blue[i] = filter[i / filterSize, i % filterSize].B;
                     }
 
                     Array.Sort(red);
