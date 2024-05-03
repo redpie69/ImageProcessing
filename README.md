@@ -9,10 +9,10 @@
 - [x] Giriş görüntüsüne ait histogram ve orjinal görüntü histogramını germe/genişletme
 - [x] İki resim arasında aritmetik işlemler (çıkarma, çarpma)
 - [x] Kontrast azaltma
-- [ ] Konvolüsyon İşlemi (median)
-- [ ] Eşikleme işlemleri (Çift Eşikleme)
+- [x] Konvolüsyon İşlemi (median)
+- [x] Eşikleme işlemleri (Çift Eşikleme)
 - [ ] Kenar Bulma Algoritmalarının Kullanımı (canny)
-- [ ] Görüntüye Gürültü Ekleme (Salt&Pepper) ve filtrelerin kullanımı (mean, median) ile gürültü temizleme
+- [x] Görüntüye Gürültü Ekleme (Salt&Pepper) ve filtrelerin kullanımı (mean, median) ile gürültü temizleme
 - [ ] Görüntüye Filtre Uygulanması (Motion)
 - [ ] Morfolojik İşlemler (Genişleme, Aşınma, Açma, Kapama)
 
