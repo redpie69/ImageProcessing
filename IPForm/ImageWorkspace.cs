@@ -326,11 +326,66 @@ namespace IPForm
             SetControlsEnabledTo(false);
             try
             {
-                IP.MedianFilter((Bitmap)Image, 5);
+                IP.MedianFilter((Bitmap)Image, (int)numUDFilterMatrixSize.Value);
             }
             catch (Exception ex)
             {
                 // return the error message
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void buttonSaltPepper_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.AddSaltAndPepper((Bitmap)Image, (double)numUDSaltChance.Value, (double)numUDPepperChance.Value);
+            }
+            catch (Exception ex)
+            {
+
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void buttonThreshholding_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.CiftEsikleme((Bitmap)Image, (int)numUDThreshMin.Value, (int)numUDThreshMax.Value);
+            }
+            catch (Exception ex)
+            {
+
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void buttonConvolution_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            // create a 3x3 kernel of double[,] to use in convolution
+            double[,] kernel = new double[3, 3]
+            {
+                { 1, 1, 1 },
+                { 1, 1, 1 },
+                { 1, 1, 1 }
+            };
+            try
+            {
+                IP.Konvolusyon((Bitmap)Image, kernel);
+            }
+            catch (Exception ex)
+            {
+
                 _ = MessageBox.Show(ex.Message);
             }
             RefreshWorkspace();
