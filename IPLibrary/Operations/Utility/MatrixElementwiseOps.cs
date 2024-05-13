@@ -52,6 +52,7 @@ namespace IPLibrary.Utility
                     {
                         for (int j = 0; j < A.GetLength(1); j++)
                         {
+                            if (B[i, j] == 0) B[i, j] = 1;
                             result[i, j] = A[i, j] / B[i, j];
                         }
                     }
