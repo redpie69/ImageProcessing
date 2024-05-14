@@ -391,5 +391,38 @@ namespace IPForm
             RefreshWorkspace();
             SetControlsEnabledTo(true);
         }
+
+        private void ButtonEdgeDetectCanny_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.CannyEdgeDetection((Bitmap)Image, 1);
+            }
+            catch (Exception ex)
+            {
+
+                _ = MessageBox.Show(ex.Message);
+                //throw ex;
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void buttonFilterMean_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.MeanFilter((Bitmap)Image, (int)numUDFilterMatrixSize.Value);
+            }
+            catch (Exception ex)
+            {
+                // return the error message
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
     }
 }
