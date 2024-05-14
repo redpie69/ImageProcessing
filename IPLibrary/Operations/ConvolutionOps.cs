@@ -61,7 +61,32 @@ namespace IPLibrary
             }
         }
 
-        
+        public static void GaussianBlur(Bitmap image, double sigma)
+        {
+            int filterSize = (int)(4 * sigma + 0.5) + 1; // Ensure odd filter size
+            if (filterSize % 2 == 0)
+            {
+                filterSize++;
+            }
+
+            double[,] gaussianKernel = new double[filterSize, filterSize];
+            int center = filterSize / 2;
+
+            for (int y = -center; y <= center; y++)
+            {
+                for (int x = -center; x <= center; x++)
+                {
+                    double exponent = -(x * x + y * y) / (2.0 * sigma * sigma);
+                    double normal = 1.0 / (2.0 * Math.PI * sigma * sigma);
+                    gaussianKernel[y + center, x + center] = normal * Math.Exp(exponent);
+                }
+            }
+
+            Konvolusyon(image, gaussianKernel);
+            return;
+        }
+
+
         public static void MedianFilter(Bitmap image, int filterSize) // filtre alaninin bir kenarinin uzunlugu
         {
             if (filterSize < 3)
@@ -72,23 +97,23 @@ namespace IPLibrary
 
             Color[,] filter = new Color[filterSize, filterSize];
 
-            for(int y=0;y<image.Height;y++)
+            for (int y = 0; y < image.Height; y++)
             {
-                for(int x=0;x<image.Width;x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     int leftTopX = x - ((filterSize + 1) / 2 - 1);
                     int leftTopY = y - ((filterSize + 1) / 2 - 1);
 
-                    for (int i=0;i<filterSize;i++)
+                    for (int i = 0; i < filterSize; i++)
                     {
-                        for(int j=0;j<filterSize;j++)
+                        for (int j = 0; j < filterSize; j++)
                         {
                             if ((leftTopX + i) < 0 || (leftTopX + i) >= image.Width || (leftTopY + j) < 0 || (leftTopY + j) >= image.Height)
                             {
                                 filter[i, j] = Color.Black;
                                 continue;
                             }
-                            filter[i,j]=image.GetPixel(leftTopX+i, leftTopY+j);
+                            filter[i, j] = image.GetPixel(leftTopX + i, leftTopY + j);
                         }
                     }
                     int arraySize = filterSize * filterSize;
@@ -96,9 +121,9 @@ namespace IPLibrary
                     int[] green = new int[arraySize];
                     int[] blue = new int[arraySize];
 
-                    for(int i=0;i<arraySize;i++)
+                    for (int i = 0; i < arraySize; i++)
                     {
-                        red[i] = filter[i/filterSize,i%filterSize].R;
+                        red[i] = filter[i / filterSize, i % filterSize].R;
                         green[i] = filter[i / filterSize, i % filterSize].G;
                         blue[i] = filter[i / filterSize, i % filterSize].B;
                     }
@@ -108,15 +133,12 @@ namespace IPLibrary
                     Array.Sort(blue);
 
                     int mid = (arraySize + 1) / 2;
-                    
+
                     Color newColor = Color.FromArgb(red[mid], green[mid], blue[mid]);
 
-                    image.SetPixel(x,y, newColor);
+                    image.SetPixel(x, y, newColor);
                 }
             }
-
-            
         }
-
     }
 }
