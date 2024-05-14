@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.groupBoxColorSpaceOps = new System.Windows.Forms.GroupBox();
             this.buttonGray2RGB = new System.Windows.Forms.Button();
             this.buttonColorSpaceRGB2Gray = new System.Windows.Forms.Button();
             this.groupBoxConvOps = new System.Windows.Forms.GroupBox();
             this.buttonConvolution = new System.Windows.Forms.Button();
             this.groupBoxEdgeDetectOps = new System.Windows.Forms.GroupBox();
+            this.label99 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numUDCannyThreshMax = new System.Windows.Forms.NumericUpDown();
+            this.numUDCannyThreshMin = new System.Windows.Forms.NumericUpDown();
             this.ButtonEdgeDetectCanny = new System.Windows.Forms.Button();
             this.groupBoxTreshOps = new System.Windows.Forms.GroupBox();
             this.buttonThreshholding = new System.Windows.Forms.Button();
@@ -55,10 +59,11 @@
             this.buttonFilterMedian = new System.Windows.Forms.Button();
             this.buttonFilterMean = new System.Windows.Forms.Button();
             this.groupBoxMorfOps = new System.Windows.Forms.GroupBox();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
+            this.comboBoxStructureElements = new System.Windows.Forms.ComboBox();
+            this.ButtonMorphClosing = new System.Windows.Forms.Button();
+            this.ButtonMorphOpening = new System.Windows.Forms.Button();
+            this.ButtonMorphErosion = new System.Windows.Forms.Button();
+            this.ButtonMorphDilation = new System.Windows.Forms.Button();
             this.groupBoxContOps = new System.Windows.Forms.GroupBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.buttonBrightnessDecrease = new System.Windows.Forms.Button();
@@ -97,18 +102,21 @@
             this.groupBoxPicture = new System.Windows.Forms.GroupBox();
             this.buttonPicSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chartPic = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonPicLoad = new System.Windows.Forms.Button();
             this.buttonPicReset = new System.Windows.Forms.Button();
-            this.numUDCannyThreshMin = new System.Windows.Forms.NumericUpDown();
-            this.numUDCannyThreshMax = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label99 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.numUDMorphSize = new System.Windows.Forms.NumericUpDown();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.NumUDConvMatrixSize = new System.Windows.Forms.NumericUpDown();
+            this.ButtonConvNewMatrix = new System.Windows.Forms.Button();
+            this.matrixGrid1 = new IPForm.MatrixGrid();
             this.groupBoxColorSpaceOps.SuspendLayout();
             this.groupBoxConvOps.SuspendLayout();
             this.groupBoxEdgeDetectOps.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMin)).BeginInit();
             this.groupBoxTreshOps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUDThreshMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUDThreshMin)).BeginInit();
@@ -143,11 +151,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUDCropLeft)).BeginInit();
             this.groupBoxPicture.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartPic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMax)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUDMorphSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUDConvMatrixSize)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxColorSpaceOps
@@ -189,10 +198,13 @@
             // groupBoxConvOps
             // 
             this.groupBoxConvOps.BackColor = System.Drawing.SystemColors.Info;
+            this.groupBoxConvOps.Controls.Add(this.ButtonConvNewMatrix);
+            this.groupBoxConvOps.Controls.Add(this.NumUDConvMatrixSize);
+            this.groupBoxConvOps.Controls.Add(this.matrixGrid1);
             this.groupBoxConvOps.Controls.Add(this.buttonConvolution);
-            this.groupBoxConvOps.Location = new System.Drawing.Point(16, 680);
+            this.groupBoxConvOps.Location = new System.Drawing.Point(227, 591);
             this.groupBoxConvOps.Name = "groupBoxConvOps";
-            this.groupBoxConvOps.Size = new System.Drawing.Size(94, 51);
+            this.groupBoxConvOps.Size = new System.Drawing.Size(190, 205);
             this.groupBoxConvOps.TabIndex = 127;
             this.groupBoxConvOps.TabStop = false;
             this.groupBoxConvOps.Text = "Konvolusyon";
@@ -203,7 +215,7 @@
             this.buttonConvolution.Location = new System.Drawing.Point(9, 16);
             this.buttonConvolution.Margin = new System.Windows.Forms.Padding(0);
             this.buttonConvolution.Name = "buttonConvolution";
-            this.buttonConvolution.Size = new System.Drawing.Size(74, 26);
+            this.buttonConvolution.Size = new System.Drawing.Size(52, 26);
             this.buttonConvolution.TabIndex = 114;
             this.buttonConvolution.Text = "Run";
             this.buttonConvolution.UseVisualStyleBackColor = true;
@@ -217,12 +229,70 @@
             this.groupBoxEdgeDetectOps.Controls.Add(this.numUDCannyThreshMax);
             this.groupBoxEdgeDetectOps.Controls.Add(this.numUDCannyThreshMin);
             this.groupBoxEdgeDetectOps.Controls.Add(this.ButtonEdgeDetectCanny);
-            this.groupBoxEdgeDetectOps.Location = new System.Drawing.Point(333, 520);
+            this.groupBoxEdgeDetectOps.Location = new System.Drawing.Point(243, 520);
             this.groupBoxEdgeDetectOps.Name = "groupBoxEdgeDetectOps";
-            this.groupBoxEdgeDetectOps.Size = new System.Drawing.Size(85, 113);
+            this.groupBoxEdgeDetectOps.Size = new System.Drawing.Size(170, 63);
             this.groupBoxEdgeDetectOps.TabIndex = 126;
             this.groupBoxEdgeDetectOps.TabStop = false;
             this.groupBoxEdgeDetectOps.Text = "Kenar Bulma";
+            // 
+            // label99
+            // 
+            this.label99.AutoSize = true;
+            this.label99.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label99.Location = new System.Drawing.Point(72, 37);
+            this.label99.Name = "label99";
+            this.label99.Size = new System.Drawing.Size(36, 18);
+            this.label99.TabIndex = 118;
+            this.label99.Text = "Max";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(72, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 18);
+            this.label1.TabIndex = 117;
+            this.label1.Text = "Min";
+            // 
+            // numUDCannyThreshMax
+            // 
+            this.numUDCannyThreshMax.DecimalPlaces = 2;
+            this.numUDCannyThreshMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numUDCannyThreshMax.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            131072});
+            this.numUDCannyThreshMax.Location = new System.Drawing.Point(110, 35);
+            this.numUDCannyThreshMax.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numUDCannyThreshMax.Name = "numUDCannyThreshMax";
+            this.numUDCannyThreshMax.Size = new System.Drawing.Size(56, 24);
+            this.numUDCannyThreshMax.TabIndex = 116;
+            // 
+            // numUDCannyThreshMin
+            // 
+            this.numUDCannyThreshMin.DecimalPlaces = 2;
+            this.numUDCannyThreshMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numUDCannyThreshMin.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            131072});
+            this.numUDCannyThreshMin.Location = new System.Drawing.Point(110, 11);
+            this.numUDCannyThreshMin.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numUDCannyThreshMin.Name = "numUDCannyThreshMin";
+            this.numUDCannyThreshMin.Size = new System.Drawing.Size(56, 24);
+            this.numUDCannyThreshMin.TabIndex = 115;
             // 
             // ButtonEdgeDetectCanny
             // 
@@ -230,7 +300,7 @@
             this.ButtonEdgeDetectCanny.Location = new System.Drawing.Point(9, 16);
             this.ButtonEdgeDetectCanny.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonEdgeDetectCanny.Name = "ButtonEdgeDetectCanny";
-            this.ButtonEdgeDetectCanny.Size = new System.Drawing.Size(74, 26);
+            this.ButtonEdgeDetectCanny.Size = new System.Drawing.Size(63, 39);
             this.ButtonEdgeDetectCanny.TabIndex = 114;
             this.ButtonEdgeDetectCanny.Text = "Canny";
             this.ButtonEdgeDetectCanny.UseVisualStyleBackColor = true;
@@ -328,7 +398,7 @@
             // 
             this.groupBoxFilterOps.BackColor = System.Drawing.SystemColors.Info;
             this.groupBoxFilterOps.Controls.Add(this.button25);
-            this.groupBoxFilterOps.Location = new System.Drawing.Point(245, 515);
+            this.groupBoxFilterOps.Location = new System.Drawing.Point(8, 706);
             this.groupBoxFilterOps.Name = "groupBoxFilterOps";
             this.groupBoxFilterOps.Size = new System.Drawing.Size(77, 51);
             this.groupBoxFilterOps.TabIndex = 124;
@@ -507,60 +577,73 @@
             // groupBoxMorfOps
             // 
             this.groupBoxMorfOps.BackColor = System.Drawing.SystemColors.Info;
-            this.groupBoxMorfOps.Controls.Add(this.button19);
-            this.groupBoxMorfOps.Controls.Add(this.button18);
-            this.groupBoxMorfOps.Controls.Add(this.button17);
-            this.groupBoxMorfOps.Controls.Add(this.button16);
+            this.groupBoxMorfOps.Controls.Add(this.comboBoxStructureElements);
+            this.groupBoxMorfOps.Controls.Add(this.ButtonMorphClosing);
+            this.groupBoxMorfOps.Controls.Add(this.ButtonMorphOpening);
+            this.groupBoxMorfOps.Controls.Add(this.ButtonMorphErosion);
+            this.groupBoxMorfOps.Controls.Add(this.ButtonMorphDilation);
             this.groupBoxMorfOps.Location = new System.Drawing.Point(8, 591);
             this.groupBoxMorfOps.Name = "groupBoxMorfOps";
-            this.groupBoxMorfOps.Size = new System.Drawing.Size(231, 83);
+            this.groupBoxMorfOps.Size = new System.Drawing.Size(217, 109);
             this.groupBoxMorfOps.TabIndex = 122;
             this.groupBoxMorfOps.TabStop = false;
             this.groupBoxMorfOps.Text = "Morfolojik İşlemler";
             // 
-            // button19
+            // comboBoxStructureElements
             // 
-            this.button19.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button19.Location = new System.Drawing.Point(10, 46);
-            this.button19.Margin = new System.Windows.Forms.Padding(0);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(100, 26);
-            this.button19.TabIndex = 113;
-            this.button19.Text = "Kapama";
-            this.button19.UseVisualStyleBackColor = true;
+            this.comboBoxStructureElements.FormattingEnabled = true;
+            this.comboBoxStructureElements.Location = new System.Drawing.Point(10, 20);
+            this.comboBoxStructureElements.Name = "comboBoxStructureElements";
+            this.comboBoxStructureElements.Size = new System.Drawing.Size(152, 21);
+            this.comboBoxStructureElements.TabIndex = 114;
             // 
-            // button18
+            // ButtonMorphClosing
             // 
-            this.button18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button18.Location = new System.Drawing.Point(121, 46);
-            this.button18.Margin = new System.Windows.Forms.Padding(0);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(100, 26);
-            this.button18.TabIndex = 112;
-            this.button18.Text = "Açma";
-            this.button18.UseVisualStyleBackColor = true;
+            this.ButtonMorphClosing.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonMorphClosing.Location = new System.Drawing.Point(10, 46);
+            this.ButtonMorphClosing.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonMorphClosing.Name = "ButtonMorphClosing";
+            this.ButtonMorphClosing.Size = new System.Drawing.Size(97, 26);
+            this.ButtonMorphClosing.TabIndex = 113;
+            this.ButtonMorphClosing.Text = "Kapama";
+            this.ButtonMorphClosing.UseVisualStyleBackColor = true;
+            this.ButtonMorphClosing.Click += new System.EventHandler(this.ButtonMorphClosing_Click);
             // 
-            // button17
+            // ButtonMorphOpening
             // 
-            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button17.Location = new System.Drawing.Point(122, 16);
-            this.button17.Margin = new System.Windows.Forms.Padding(0);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(100, 26);
-            this.button17.TabIndex = 111;
-            this.button17.Text = "Aşınma";
-            this.button17.UseVisualStyleBackColor = true;
+            this.ButtonMorphOpening.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonMorphOpening.Location = new System.Drawing.Point(10, 74);
+            this.ButtonMorphOpening.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonMorphOpening.Name = "ButtonMorphOpening";
+            this.ButtonMorphOpening.Size = new System.Drawing.Size(97, 26);
+            this.ButtonMorphOpening.TabIndex = 112;
+            this.ButtonMorphOpening.Text = "Açma";
+            this.ButtonMorphOpening.UseVisualStyleBackColor = true;
+            this.ButtonMorphOpening.Click += new System.EventHandler(this.ButtonMorphOpening_Click);
             // 
-            // button16
+            // ButtonMorphErosion
             // 
-            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.Location = new System.Drawing.Point(10, 16);
-            this.button16.Margin = new System.Windows.Forms.Padding(0);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(100, 26);
-            this.button16.TabIndex = 110;
-            this.button16.Text = "Genişleme";
-            this.button16.UseVisualStyleBackColor = true;
+            this.ButtonMorphErosion.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonMorphErosion.Location = new System.Drawing.Point(116, 74);
+            this.ButtonMorphErosion.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonMorphErosion.Name = "ButtonMorphErosion";
+            this.ButtonMorphErosion.Size = new System.Drawing.Size(97, 26);
+            this.ButtonMorphErosion.TabIndex = 111;
+            this.ButtonMorphErosion.Text = "Aşınma";
+            this.ButtonMorphErosion.UseVisualStyleBackColor = true;
+            this.ButtonMorphErosion.Click += new System.EventHandler(this.ButtonMorphErosion_Click);
+            // 
+            // ButtonMorphDilation
+            // 
+            this.ButtonMorphDilation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonMorphDilation.Location = new System.Drawing.Point(116, 46);
+            this.ButtonMorphDilation.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonMorphDilation.Name = "ButtonMorphDilation";
+            this.ButtonMorphDilation.Size = new System.Drawing.Size(97, 26);
+            this.ButtonMorphDilation.TabIndex = 110;
+            this.ButtonMorphDilation.Text = "Genişleme";
+            this.ButtonMorphDilation.UseVisualStyleBackColor = true;
+            this.ButtonMorphDilation.Click += new System.EventHandler(this.ButtonMorphDilation_Click);
             // 
             // groupBoxContOps
             // 
@@ -1096,16 +1179,6 @@
             this.panel2.Size = new System.Drawing.Size(200, 200);
             this.panel2.TabIndex = 91;
             // 
-            // pictureBox
-            // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(200, 200);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.chartPic);
@@ -1116,8 +1189,8 @@
             // 
             // chartPic
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartPic.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chartPic.ChartAreas.Add(chartArea4);
             this.chartPic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPic.Location = new System.Drawing.Point(0, 0);
             this.chartPic.Margin = new System.Windows.Forms.Padding(0);
@@ -1149,61 +1222,100 @@
             this.buttonPicReset.UseVisualStyleBackColor = true;
             this.buttonPicReset.Click += new System.EventHandler(this.buttonPicReset_Click);
             // 
-            // numUDCannyThreshMin
+            // groupBox5
             // 
-            this.numUDCannyThreshMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numUDCannyThreshMin.Increment = new decimal(new int[] {
-            10,
+            this.groupBox5.Controls.Add(this.numUDMorphSize);
+            this.groupBox5.Location = new System.Drawing.Point(176, 591);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(45, 45);
+            this.groupBox5.TabIndex = 118;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "NxN";
+            // 
+            // numUDMorphSize
+            // 
+            this.numUDMorphSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numUDMorphSize.Increment = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.numUDCannyThreshMin.Location = new System.Drawing.Point(41, 46);
-            this.numUDCannyThreshMin.Maximum = new decimal(new int[] {
-            360,
+            this.numUDMorphSize.Location = new System.Drawing.Point(5, 15);
+            this.numUDMorphSize.Maximum = new decimal(new int[] {
+            9,
             0,
             0,
             0});
-            this.numUDCannyThreshMin.Name = "numUDCannyThreshMin";
-            this.numUDCannyThreshMin.Size = new System.Drawing.Size(42, 24);
-            this.numUDCannyThreshMin.TabIndex = 115;
-            // 
-            // numUDCannyThreshMax
-            // 
-            this.numUDCannyThreshMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numUDCannyThreshMax.Increment = new decimal(new int[] {
-            10,
+            this.numUDMorphSize.Minimum = new decimal(new int[] {
+            3,
             0,
             0,
             0});
-            this.numUDCannyThreshMax.Location = new System.Drawing.Point(41, 76);
-            this.numUDCannyThreshMax.Maximum = new decimal(new int[] {
-            360,
+            this.numUDMorphSize.Name = "numUDMorphSize";
+            this.numUDMorphSize.Size = new System.Drawing.Size(37, 24);
+            this.numUDMorphSize.TabIndex = 93;
+            this.numUDMorphSize.Value = new decimal(new int[] {
+            3,
             0,
             0,
             0});
-            this.numUDCannyThreshMax.Name = "numUDCannyThreshMax";
-            this.numUDCannyThreshMax.Size = new System.Drawing.Size(42, 24);
-            this.numUDCannyThreshMax.TabIndex = 116;
             // 
-            // label1
+            // pictureBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 48);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 18);
-            this.label1.TabIndex = 117;
-            this.label1.Text = "Min";
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
             // 
-            // label99
+            // NumUDConvMatrixSize
             // 
-            this.label99.AutoSize = true;
-            this.label99.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label99.Location = new System.Drawing.Point(3, 78);
-            this.label99.Name = "label99";
-            this.label99.Size = new System.Drawing.Size(36, 18);
-            this.label99.TabIndex = 118;
-            this.label99.Text = "Max";
+            this.NumUDConvMatrixSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NumUDConvMatrixSize.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.NumUDConvMatrixSize.Location = new System.Drawing.Point(67, 16);
+            this.NumUDConvMatrixSize.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.NumUDConvMatrixSize.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.NumUDConvMatrixSize.Name = "NumUDConvMatrixSize";
+            this.NumUDConvMatrixSize.Size = new System.Drawing.Size(33, 24);
+            this.NumUDConvMatrixSize.TabIndex = 116;
+            this.NumUDConvMatrixSize.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // ButtonConvNewMatrix
+            // 
+            this.ButtonConvNewMatrix.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonConvNewMatrix.Location = new System.Drawing.Point(103, 15);
+            this.ButtonConvNewMatrix.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonConvNewMatrix.Name = "ButtonConvNewMatrix";
+            this.ButtonConvNewMatrix.Size = new System.Drawing.Size(83, 26);
+            this.ButtonConvNewMatrix.TabIndex = 117;
+            this.ButtonConvNewMatrix.Text = "Yeni";
+            this.ButtonConvNewMatrix.UseVisualStyleBackColor = true;
+            this.ButtonConvNewMatrix.Click += new System.EventHandler(this.ButtonConvNewMatrix_Click);
+            // 
+            // matrixGrid1
+            // 
+            this.matrixGrid1.Location = new System.Drawing.Point(9, 46);
+            this.matrixGrid1.Name = "matrixGrid1";
+            this.matrixGrid1.Size = new System.Drawing.Size(177, 153);
+            this.matrixGrid1.TabIndex = 115;
             // 
             // ImageWorkspace
             // 
@@ -1211,6 +1323,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBoxColorSpaceOps);
             this.Controls.Add(this.groupBoxTreshOps);
             this.Controls.Add(this.groupBoxConvOps);
@@ -1228,6 +1341,8 @@
             this.groupBoxConvOps.ResumeLayout(false);
             this.groupBoxEdgeDetectOps.ResumeLayout(false);
             this.groupBoxEdgeDetectOps.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMin)).EndInit();
             this.groupBoxTreshOps.ResumeLayout(false);
             this.groupBoxTreshOps.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUDThreshMax)).EndInit();
@@ -1265,11 +1380,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUDCropLeft)).EndInit();
             this.groupBoxPicture.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartPic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDCannyThreshMax)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numUDMorphSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUDConvMatrixSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1296,10 +1412,10 @@
         private System.Windows.Forms.Button buttonFilterMedian;
         private System.Windows.Forms.Button buttonFilterMean;
         private System.Windows.Forms.GroupBox groupBoxMorfOps;
-        private System.Windows.Forms.Button button19;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button ButtonMorphClosing;
+        private System.Windows.Forms.Button ButtonMorphOpening;
+        private System.Windows.Forms.Button ButtonMorphErosion;
+        private System.Windows.Forms.Button ButtonMorphDilation;
         private System.Windows.Forms.GroupBox groupBoxContOps;
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.NumericUpDown numUDBrightness;
@@ -1353,5 +1469,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numUDCannyThreshMax;
         private System.Windows.Forms.NumericUpDown numUDCannyThreshMin;
+        private System.Windows.Forms.ComboBox comboBoxStructureElements;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.NumericUpDown numUDMorphSize;
+        private MatrixGrid matrixGrid1;
+        private System.Windows.Forms.NumericUpDown NumUDConvMatrixSize;
+        private System.Windows.Forms.Button ButtonConvNewMatrix;
     }
 }

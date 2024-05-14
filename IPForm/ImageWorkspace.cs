@@ -19,6 +19,7 @@ namespace IPForm
             chartPic.ChartAreas[0].AxisX.Minimum = 0;
             SetControlsEnabledTo(false);
             buttonPicLoad.Enabled = true;
+            comboBoxStructureElements.DataSource = Enum.GetValues(typeof(MorphologicalStructuringElements));
         }
 
         public void SetImage(Image image)
@@ -373,14 +374,9 @@ namespace IPForm
         {
             SetControlsEnabledTo(false);
             // create a 3x3 kernel of double[,] to use in convolution
-            double[,] kernel = new double[3, 3]
-            {
-                { 1, 1, 1 },
-                { 1, 1, 1 },
-                { 1, 1, 1 }
-            };
             try
             {
+                double[,] kernel = matrixGrid1.GetMatrix();
                 IP.Konvolusyon((Bitmap)Image, kernel);
             }
             catch (Exception ex)
@@ -423,6 +419,79 @@ namespace IPForm
             }
             RefreshWorkspace();
             SetControlsEnabledTo(true);
+        }
+
+        private void ButtonMorphDilation_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                bool[,] structure = IP.GenerateStructuringElement((MorphologicalStructuringElements)comboBoxStructureElements.SelectedIndex, (int)numUDMorphSize.Value);
+                Bitmap result = IP.ApplyMorphologicalOperation((Bitmap)Image, structure, MorphologicalOps.Dilation);
+                SetImage(result);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void ButtonMorphClosing_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                bool[,] structure = IP.GenerateStructuringElement((MorphologicalStructuringElements)comboBoxStructureElements.SelectedIndex, (int)numUDMorphSize.Value);
+                Bitmap result = IP.ApplyMorphologicalOperation((Bitmap)Image, structure, MorphologicalOps.Closing);
+                SetImage(result);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void ButtonMorphOpening_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                bool[,] structure = IP.GenerateStructuringElement((MorphologicalStructuringElements)comboBoxStructureElements.SelectedIndex, (int)numUDMorphSize.Value);
+                Bitmap result = IP.ApplyMorphologicalOperation((Bitmap)Image, structure, MorphologicalOps.Opening);
+                SetImage(result);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void ButtonMorphErosion_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                bool[,] structure = IP.GenerateStructuringElement((MorphologicalStructuringElements)comboBoxStructureElements.SelectedIndex, (int)numUDMorphSize.Value);
+                Bitmap result = IP.ApplyMorphologicalOperation((Bitmap)Image, structure, MorphologicalOps.Erosion);
+                SetImage(result);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void ButtonConvNewMatrix_Click(object sender, EventArgs e)
+        {
+            matrixGrid1.CreateMatrix((int)NumUDConvMatrixSize.Value);
         }
     }
 }
