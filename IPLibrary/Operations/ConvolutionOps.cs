@@ -85,7 +85,60 @@ namespace IPLibrary
             Konvolusyon(image, gaussianKernel);
             return;
         }
+        public static void MeanFilter(Bitmap image, int filterSize)
+        {
+            if (filterSize < 3)
+                throw new ArgumentException("filtre boyutu 3 ve daha buyuk olabilir");
+            if (filterSize % 2 != 1)
+                throw new ArgumentException("filtre boyutu tek sayi olmalidir");
 
+            Color[,] filter = new Color[filterSize, filterSize];
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    int leftTopX = x - ((filterSize + 1) / 2 - 1);
+                    int leftTopY = y - ((filterSize + 1) / 2 - 1);
+
+                    for (int i = 0; i < filterSize; i++)
+                    {
+                        for (int j = 0; j < filterSize; j++)
+                        {
+                            if ((leftTopX + i) < 0 || (leftTopX + i) >= image.Width || (leftTopY + j) < 0 || (leftTopY + j) >= image.Height)
+                            {
+                                filter[i, j] = Color.Black;
+                                continue;
+                            }
+                            filter[i, j] = image.GetPixel(leftTopX + i, leftTopY + j);
+                        }
+                    }
+
+                    int redSum = 0;
+                    int greenSum = 0;
+                    int blueSum = 0;
+
+                    for (int i = 0; i < filterSize; i++)
+                    {
+                        for (int j = 0; j < filterSize; j++)
+                        {
+                            redSum += filter[i, j].R;
+                            greenSum += filter[i, j].G;
+                            blueSum += filter[i, j].B;
+                        }
+                    }
+
+                    int pixelCount = filterSize * filterSize;
+                    int redAverage = redSum / pixelCount;
+                    int greenAverage = greenSum / pixelCount;
+                    int blueAverage = blueSum / pixelCount;
+
+                    Color newColor = Color.FromArgb(redAverage, greenAverage, blueAverage);
+
+                    image.SetPixel(x, y, newColor);
+                }
+            }
+        }
 
         public static void MedianFilter(Bitmap image, int filterSize) // filtre alaninin bir kenarinin uzunlugu
         {
