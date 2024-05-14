@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Operations\ArithmeticOps.cs" />
     <Compile Include="Operations\EdgeOps.cs" />
+    <Compile Include="Operations\MorphologicalOps.cs" />
     <Compile Include="Operations\Noise.cs" />
     <Compile Include="Operations\Utility\ImageOps.cs" />
     <Compile Include="Operations\BrightnessOps.cs" />
