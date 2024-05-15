@@ -16,19 +16,21 @@ namespace IPLibrary
             {
                 throw new ArgumentException("kernelin eni ve boyu tek sayi olmali");
             }
-
-            Bitmap cerceveli = ImageOps.CevresiniDoldurma(image);
-            double[,] dondurulmusKernel = MatrixOps.KerneliDondur(kernel);
-            int[,] matrisHali = ImageOps.TurnItToMatrix(cerceveli);
-
             int kernelBoyutu = kernel.GetLength(0);
             int merkezdenUzaklik = kernelBoyutu / 2;
 
+            Bitmap cerceveli = ImageOps.CevresiniDoldurma(image,merkezdenUzaklik,merkezdenUzaklik);
+            double[,] dondurulmusKernel = MatrixOps.KerneliDondur(kernel);
+            int[,] matrisHali = ImageOps.TurnItToMatrix(cerceveli);
+
+            
+            
+
             Bitmap newImage = new Bitmap(image.Width, image.Height);
 
-            for (int y = 1; y < cerceveli.Height - 1; y++)
+            for (int y =merkezdenUzaklik ; y < cerceveli.Height - 1; y++)
             {
-                for (int x = 1; x < cerceveli.Width - 1; x++)
+                for (int x = merkezdenUzaklik; x < cerceveli.Width - 1; x++)
                 {
                     double toplam = 0;
 
@@ -82,7 +84,7 @@ namespace IPLibrary
                 }
             }
 
-            Konvolusyon(image, gaussianKernel);
+            FilterWith(image, gaussianKernel);
             return;
         }
         public static void MeanFilter(Bitmap image, int filterSize)
@@ -138,6 +140,82 @@ namespace IPLibrary
                     image.SetPixel(x, y, newColor);
                 }
             }
+        }
+
+        public static void FilterWith(Bitmap image, double[,] filter)
+        {
+            if (filter.GetLength(0) % 2 != 1 || filter.GetLength(1)%2 != 1)
+            {
+                throw new ArgumentException("kernelin eni ve boyu tek sayi olmali");
+            }
+            
+
+            int imageWidth = image.Width;
+            int imageHeight = image.Height;
+            int filterRowCount = filter.GetLength(0);
+            int filterColumnCount = filter.GetLength(1);
+
+            Point kernelMidPoint = new Point();
+            kernelMidPoint.X = (filterRowCount + 1) / 2 -1;
+            kernelMidPoint.Y = (filterColumnCount + 1) / 2 -1;
+
+            Bitmap cerceveli = ImageOps.CevresiniDoldurma(image,kernelMidPoint.X,kernelMidPoint.Y);
+            int[,] deneme = ImageOps.TurnItToMatrix(cerceveli);
+            Color pixel = new Color();
+            double redSum = 0;
+            double greenSum = 0;
+            double blueSum = 0;
+
+            for(int x=kernelMidPoint.X;x<cerceveli.Width-kernelMidPoint.X;x++)
+            {
+                for(int y=kernelMidPoint.Y;y<cerceveli.Height-kernelMidPoint.Y;y++)
+                {
+                    for(int i=-kernelMidPoint.X;i<kernelMidPoint.X;i++)
+                    {
+                        for(int j=-kernelMidPoint.Y;j<kernelMidPoint.Y;j++)
+                        {
+                            pixel = cerceveli.GetPixel(x+i,y+j);
+                            redSum += pixel.R*filter[i+kernelMidPoint.X,j+kernelMidPoint.Y];
+                            greenSum += pixel.G * filter[i + kernelMidPoint.X, j + kernelMidPoint.Y];
+                            blueSum += pixel.B * filter[i + kernelMidPoint.X, j + kernelMidPoint.Y];
+                        }
+                    }
+
+                    if(redSum <0)
+                    {
+                        redSum = 0;
+                    }
+                    else if(redSum >255)
+                    {
+                        redSum = 255;
+                    }
+
+                    if (blueSum < 0)
+                    {
+                        blueSum = 0;
+                    }
+                    else if (blueSum > 255)
+                    {
+                        blueSum = 255;
+                    }
+
+                    if (greenSum < 0)
+                    {
+                        greenSum = 0;
+                    }
+                    else if (greenSum > 255)
+                    {
+                        greenSum = 255;
+                    }
+
+                    image.SetPixel(x - kernelMidPoint.X, y - kernelMidPoint.Y, Color.FromArgb((int)redSum, (int)greenSum, (int)blueSum));
+                    redSum = 0;
+                    blueSum = 0;
+                    greenSum = 0;
+                }
+            }
+
+       
         }
 
         public static void MedianFilter(Bitmap image, int filterSize) // filtre alaninin bir kenarinin uzunlugu

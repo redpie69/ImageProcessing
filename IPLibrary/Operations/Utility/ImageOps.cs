@@ -9,18 +9,18 @@ namespace IPLibrary
         /// </summary>
         /// <param name="image">The original image.</param>
         /// <returns>The bitmap with a border.</returns>
-        internal static Bitmap CevresiniDoldurma(Bitmap image)
+        internal static Bitmap CevresiniDoldurma(Bitmap image,int sidesLineCount,int topBotLineCount)
         {
-            Bitmap CerceveliBitmap = new Bitmap(image.Width + 1, image.Height + 1);
+            Bitmap CerceveliBitmap = new Bitmap(image.Width + sidesLineCount*2, image.Height + topBotLineCount*2);
 
             for (int y = 0; y < CerceveliBitmap.Height; y++)
             {
                 for (int x = 0; x < CerceveliBitmap.Width; x++)
                 {
-                    if (x == 0 || y == 0 || y == CerceveliBitmap.Height - 1 || x == CerceveliBitmap.Width - 1)
+                    if (x<sidesLineCount||y<topBotLineCount||x>=image.Width+sidesLineCount||y>=image.Height+topBotLineCount)
                         CerceveliBitmap.SetPixel(x, y, Color.Black);
                     else
-                        CerceveliBitmap.SetPixel(x, y, image.GetPixel(x - 1, y - 1));
+                        CerceveliBitmap.SetPixel(x, y, image.GetPixel(x - sidesLineCount, y - topBotLineCount));
                 }
             }
             return CerceveliBitmap;
