@@ -306,22 +306,6 @@ namespace IPForm
             SetControlsEnabledTo(true);
         }
 
-        private void buttonGray2RGB_Click(object sender, EventArgs e)
-        {
-            SetControlsEnabledTo(false);
-            try
-            {
-                IP.GrayScale2Binary((Bitmap)Image);
-            }
-            catch (Exception ex)
-            {
-                // return the error message
-                _ = MessageBox.Show(ex.Message);
-            }
-            RefreshWorkspace();
-            SetControlsEnabledTo(true);
-        }
-
         private void buttonFilterMedian_Click(object sender, EventArgs e)
         {
             SetControlsEnabledTo(false);
@@ -377,7 +361,7 @@ namespace IPForm
             try
             {
                 double[,] kernel = matrixGrid1.GetMatrix();
-                IP.Konvolusyon((Bitmap)Image, kernel);
+                IP.FilterWith((Bitmap)Image, kernel);
             }
             catch (Exception ex)
             {
@@ -492,6 +476,11 @@ namespace IPForm
         private void ButtonConvNewMatrix_Click(object sender, EventArgs e)
         {
             matrixGrid1.CreateMatrix((int)NumUDConvMatrixSize.Value);
+        }
+
+        private void ButtonFilterGauss_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
