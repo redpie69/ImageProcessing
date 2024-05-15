@@ -31,8 +31,8 @@ namespace IPLibrary
         }
         public static Bitmap Crop(Bitmap image, Point topLeft, Point bottomRight)
         {
-            int height = topLeft.Y - bottomRight.Y;
-            int width = bottomRight.X - topLeft.X;
+            int height = Math.Abs(topLeft.Y - bottomRight.Y);
+            int width = Math.Abs(bottomRight.X - topLeft.X);
             int mappedX;
             int mappedY;
 
@@ -44,7 +44,17 @@ namespace IPLibrary
                 {
                     mappedX = topLeft.X + x;
                     mappedY = topLeft.Y + y;
-                    croppedImage.SetPixel(x, y, image.GetPixel(mappedX, mappedY));
+
+                    // Check if the mapped coordinates are within the image bounds
+                    if (mappedX >= 0 && mappedX < image.Width && mappedY >= 0 && mappedY < image.Height)
+                    {
+                        croppedImage.SetPixel(x, y, image.GetPixel(mappedX, mappedY));
+                    }
+                    else
+                    {
+                        // Handle out of range coordinates by setting the pixel to a default color (e.g., black)
+                        croppedImage.SetPixel(x, y, Color.Black);
+                    }
                 }
             }
 
@@ -230,10 +240,10 @@ namespace IPLibrary
                             f = MatrixOps.MatrixMultiplication(reversedTransMatrix, v);
 
                             int[,] pointsR = MatrixOps.NeighbourhoodCreator(f, 4);
-                            int[,] pointsG = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
-                            int[,] pointsB = new int[pointsR.GetLength(0),pointsR.GetLength(1)];
-                            pointsG=(int[,])pointsR.Clone();
-                            pointsB=(int[,])pointsR.Clone();
+                            int[,] pointsG = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
+                            int[,] pointsB = new int[pointsR.GetLength(0), pointsR.GetLength(1)];
+                            pointsG = (int[,])pointsR.Clone();
+                            pointsB = (int[,])pointsR.Clone();
 
                             for (int i = 0; i < pointsR.GetLength(0); i++)
                             {
