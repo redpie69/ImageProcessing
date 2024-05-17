@@ -483,5 +483,44 @@ namespace IPForm
         {
 
         }
+
+        private void ButtonFilterMotion_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                IP.MotionFilter((Bitmap)Image);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
+
+        private void ButtonColorSpaceToHSV_Click(object sender, EventArgs e)
+        {
+            SetControlsEnabledTo(false);
+            try
+            {
+                double H = -1;
+                double S = -1;
+                double V = -1;
+                // create a new color 155 155 255
+                Color color = Color.FromArgb((int)NumUDRed.Value, (int)NumUDGreen.Value, (int)NumUDBlue.Value);
+                IP.Color2HSV(color, out H, out S, out V);
+                //only print 2 decimal places
+                LabelResultH.Text = $"{H:F2}";
+                LabelResultS.Text = $"{S:F2}";
+                LabelResultV.Text = $"{V:F2}";
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+            }
+            RefreshWorkspace();
+            SetControlsEnabledTo(true);
+        }
     }
 }
