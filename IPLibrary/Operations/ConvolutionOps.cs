@@ -271,5 +271,11 @@ namespace IPLibrary
                 }
             }
         }
+
+        public static void MotionFilter(Bitmap image)
+        {
+            double[,] filter = { { 0, 0.2, 0 }, { 0, 0.2, 0 }, { 0, 0.2, 0 }, { 0, 0.2, 0 }, { 0, 0.2, 0 } };
+            FilterWith(image, filter);
+        }
     }
 }
