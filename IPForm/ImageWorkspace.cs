@@ -377,7 +377,8 @@ namespace IPForm
             SetControlsEnabledTo(false);
             try
             {
-                IP.CannyEdgeDetection((Bitmap)Image, 1);
+                Bitmap result = IP.CannyEdgeDetection((Bitmap)Image, (double)NumUDCannySigma.Value, (double)numUDCannyThreshMin.Value, (double)numUDCannyThreshMax.Value);
+                SetImage(result);
             }
             catch (Exception ex)
             {
